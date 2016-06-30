@@ -22,14 +22,14 @@
       <h2>Legal Justice Alliance</h2>
     </div>
     <div ng-controller="contentArea">
-        <b>Client Information</p>
-        <table>
+        <p><b>Client Information</b></p>
+        <table width="40%">
           <tr>
             <td>
-              {{client.firstName}} {{client.lastName}}
+              {{client.first_name}} {{client.last_name}}
             </td>
             <td>
-              {{client.phoneNumber}}
+              {{client.phone}}
             </td>
           </tr>
           <tr>
@@ -45,10 +45,33 @@
               <p>{{client.city}} , {{client.state}}</p>
             </td>
             <td>
-              <p>Client ID: {{client.ID}}</p>
+              <p>Client ID: {{client.id}}</p>
             </td>
           </tr>
         </table>
+<br><br><br>
+
+        <p><b>Insurance Information</p></b>
+
+        <table width="30%">
+          <tr>
+            <td><b>Provider</b> {{insurer.provider}}</td>
+          </tr>
+          <tr>
+            <td><b>Contact Name:</b> {{insurer.first_name}} {{insurer.last_name}}</td>
+          </tr>
+          <tr>
+            <td><b>Phone:</b> {{insurer.phone}}</td>
+          </tr>
+          <tr>
+            <td><b>Email Address:</b> {{insurer.email}}</td>
+          </tr>
+        </table>
+
+
+
+
+
 
     </div>
 
