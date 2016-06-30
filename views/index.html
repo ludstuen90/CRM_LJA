@@ -23,10 +23,10 @@
     </div>
     <div ng-controller="contentArea">
         <p><b>Client Information</b></p>
-        <table width="40%">
+        <table width="40%"><p>
           <tr>
             <td>
-              {{client.first_name}} {{client.last_name}}
+            {{client.first_name}} {{client.last_name}}
             </td>
             <td>
               {{client.phone}}
@@ -37,18 +37,23 @@
               {{client.address}}
             </td>
             <td>
-              {{client.email}}
+            {{client.address2}}
             </td>
           </tr>
           <tr>
             <td>
-              <p>{{client.city}} , {{client.state}}</p>
+              {{client.city}} , {{client.state}}
             </td>
             <td>
-              <p>Client ID: {{client.id}}</p>
+              {{client.email}}
             </td>
           </tr>
-        </table>
+          <tr>
+            <td>Claim Number: {{client.claim_num}}</td>
+            <td>Client ID: {{client.id}}</td>
+          </tr>
+        </p></table>
+
 <br><br><br>
 
         <p><b>Insurance Information</p></b>
