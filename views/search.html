@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app="CRMLJA">
+  <head>
+    <meta charset="utf-8">
+    <title>Client 360 Page</title>
+    <script type="text/javascript" src="vendors/angular.min.js"></script>
+    <script type="text/javascript" src="scripts/clientApp.js"></script>
+    <link rel="stylesheet" href="vendors/bootstrap.min.css"></link>
+    <link rel="stylesheet" href="assets/sheetrock.css"></link>
+  </head>
+  <body>
+    <div id="nav">
+      <ul class="pull-left">
+        <li>Menu</li>
+      </ul>
+      <ul class="pull-right">
+          <li>Sign Out</li>
+        </ul>
+    </div>
+    <br><br>
+    <div id="header">
+      <h2>Legal Justice Alliance</h2>
+    </div>
+    <div ng-controller="searchPage">
+
+      <h2>Client Search</h2>
+      <input type="text" ng-model="clientId" placeholder="Enter a client ID"></input>
+      <button type="submit" ng-click="searchClient()">Submit</button>
+    </div>
+
+  </body>
+</html>

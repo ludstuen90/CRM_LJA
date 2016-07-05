@@ -6,47 +6,84 @@ CRMLJA.controller('contentArea', ['$scope', '$http', function($scope, $http){
     console.log('angular works');
   };
 
-  // $scope.client ={
-  //   firstName: "Aesop",
-  //   lastName: "P.W. Corgi",
-  //   phoneNumber: "555-555-5555",
-  //   address: "522 Dog Way",
-  //   city: "Minneapolis",
-  //   state: "MN",
-  //   ID: "652929",
-  //   email: "BallinAesop818@gmail.com"
-  // };
 
-// $scope.insurer = {
-//   provider: "Met Life",
-//   cName: "Juanamaria Cordones Cook",
-//   phone: "612-555-5555",
-//   email: "JCordonesCook@Metlife.com"
-// };
+$scope.updateClient = function(){
+        var sendMe = {
+          id: $scope.idIn
+        };
 
+
+        $http({
+          method: 'POST',
+          url: '/sendClient',
+          data: sendMe
+        }).then(function(){
+          console.log("We have completed the post");
+          $scope.getClients();
+          // $scope.client = response.data[0];
+          console.log($scope.client);
+        });
+
+        console.log("before sending to server, searchId is ", sendMe.id);
+
+
+
+};
+
+$scope.getClients = function(){
+  console.log("get clients was called!");
+  $http({
+    method: 'GET',
+    url: '/getInsurer',
+  }).then(function(responseIns){
+    console.log("response ins is is...");
+    console.log(responseIns);
+    $scope.insurer=responseIns.data[0];
+  });
 
   $http({
     method: 'GET',
     url: '/getClient',
   }).then(function(response){
+    console.log("client response is...");
     console.log(response);
-
     $scope.client = response.data[0];
     console.log($scope.client);
   });
+};
+$scope.getClients();
 
-  $http({
-    method: 'GET',
-    url: '/getInsurer',
-  }).then(function(responseIns){
-    console.log(responseIns);
-    $scope.insurer=responseIns.data[0];
-  });
+}]);
+
+CRMLJA.controller('searchPage', ['$scope', '$http', function($scope, $http){
+  $scope.test = function(){
+    console.log("Search page works!");
+  };
+
+  $scope.nextPage = function(){
+    console.log('made it to next page');
+    $http({
+      method: 'GET',
+      url: '/360View'
+    });
+  };
+
+  $scope.searchClient = function(){
+    console.log("We are now searching for...", $scope.clientId);
+    var sendMe = {
+      id: $scope.clientId
+    };
+
+    $http({
+      method: 'POST',
+      url: '/sendClient',
+      data: sendMe
+    }).then(function(){
+      $scope.nextPage();
+    });
+
+  };
 
 
-
-
-
-  $scope.angularWorks();
 
 }]);
