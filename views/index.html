@@ -61,11 +61,14 @@
 
 <br><br><br>
 
-        <p><b>Insurance Information</p></b>
+        <p><b>Provider/Carrier Information: </p></b>
 
         <table width="30%" ng-repeat = 'person in insurer'>
           <tr>
-            <td><b>Provider</b> {{insurer[$index].provider}}</td>
+            <td><b>Agency</b> {{insurer[$index].provider}}</td>
+          </tr>
+          <tr>
+            <td><b>Provider Type</b> {{insurer[$index].provider_type}}
           </tr>
           <tr>
             <td><b>Contact Name:</b> {{insurer[$index].first_name}} {{insurer[$index].last_name}}</td>
@@ -76,6 +79,8 @@
           <tr>
             <td><b>Email Address:</b> {{insurer[$index].email}}</td>
           </tr>
+          <tr>
+            <td><b>Special notes:</b> {{insurer[$index].notes}}</td>
           <tr>
             <td>...</td>
           </tr>
