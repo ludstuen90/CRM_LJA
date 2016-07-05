@@ -36,9 +36,9 @@ $scope.getClients = function(){
     method: 'GET',
     url: '/getInsurer',
   }).then(function(responseIns){
-    console.log("response ins is is...");
-    console.log(responseIns);
-    $scope.insurer=responseIns.data[0];
+    console.log("response insurer is is...");
+    console.log(responseIns.data);
+    $scope.insurer=responseIns.data;
   });
 
   $http({

@@ -63,18 +63,21 @@
 
         <p><b>Insurance Information</p></b>
 
-        <table width="30%">
+        <table width="30%" ng-repeat = 'person in insurer'>
           <tr>
-            <td><b>Provider</b> {{insurer.provider}}</td>
+            <td><b>Provider</b> {{insurer[$index].provider}}</td>
           </tr>
           <tr>
-            <td><b>Contact Name:</b> {{insurer.first_name}} {{insurer.last_name}}</td>
+            <td><b>Contact Name:</b> {{insurer[$index].first_name}} {{insurer[$index].last_name}}</td>
           </tr>
           <tr>
-            <td><b>Phone:</b> {{insurer.phone}}</td>
+            <td><b>Phone:</b> {{insurer[$index].phone}}</td>
           </tr>
           <tr>
-            <td><b>Email Address:</b> {{insurer.email}}</td>
+            <td><b>Email Address:</b> {{insurer[$index].email}}</td>
+          </tr>
+          <tr>
+            <td>...</td>
           </tr>
         </table>
 
