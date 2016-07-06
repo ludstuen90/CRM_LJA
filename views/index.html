@@ -59,11 +59,21 @@
           </tr>
         </p></table>
 
-<br><br><br>
+<br><br>
+
+<p><b>Cases: </p></b>
+<table  id="cases">
+  <tr>
+    <td><b>Case ID:</b></td>
+    <td><b>Case Title:</b></td>
+    <td><b>Created By:</b></td>
+    <td><b>Created At:</b></td>
+  </tr>
+  <table>
 
         <p><b>Provider/Carrier Information: </p></b>
 
-        <table width="30%" ng-repeat = 'person in insurer'>
+        <table id="info" ng-repeat = 'person in insurer'>
           <tr>
             <td><b>Agency</b> {{insurer[$index].provider}}</td>
           </tr>
@@ -85,6 +95,8 @@
             <td>...</td>
           </tr>
         </table>
+
+
 
 
 
