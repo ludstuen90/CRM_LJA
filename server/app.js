@@ -6,6 +6,7 @@ var app=express();
 app.use( bodyParser.json() );
 
 global.clientId=0;
+global.caseId=0;
 
 
 //include Database
@@ -133,8 +134,20 @@ app.get('/getCases', function(req, res){
   });
 });
 
+app.post('/caseParams', function(req, res){
+  console.log("Request Received to go to a case");
+  console.log(req.body.case_id);
+  res.sendStatus(200);
+
+});
+
+
 app.get('/search', function(req, res){
   res.sendFile(path.resolve('views/search.html'));
+});
+
+app.get('/case', function(req, res){
+  res.sendFile(path.resolve('views/case.html'));
 });
 
 //Assign Static Folder

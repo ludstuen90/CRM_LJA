@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html ng-app="CRMLJA">
+  <head>
+    <meta charset="utf-8">
+    <title>Client 360 Page</title>
+    <script type="text/javascript" src="vendors/angular.min.js"></script>
+    <script type="text/javascript" src="scripts/clientApp.js"></script>
+    <link rel="stylesheet" href="vendors/bootstrap.min.css"></link>
+    <link rel="stylesheet" href="assets/sheetrock.css"></link>
+  </head>
+  <body>
+    <div ng-include="'partials/navbar.html'"></div>
+
+    <br><br>
+    <div id="header">
+      <h2>Legal Justice Alliance</h2>
+    </div>
+    <div ng-controller="cases">
+      <div class="row">
+      <div class="container">
+        <div class="col-md-12">
+        <p><b>Client Information</b></p>
+        <table width="40%"><p>
+          <tr>
+            <td>
+            {{client.first_name}} {{client.last_name}}
+            </td>
+            <td>
+              {{client.phone}}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              {{client.address}}
+            </td>
+            <td>
+            {{client.address2}}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              {{client.city}} , {{client.state}}
+            </td>
+            <td>
+              {{client.email}}
+            </td>
+          </tr>
+          <tr>
+            <td>Claim Number: {{client.claim_num}}</td>
+            <td>Client ID: {{client.id}}</td>
+          </tr>
+        </p></table>
+      </div>
+    </div>
+  </div>
+  <br><br>
+  <div class="row">
+    <div class="container">
+      <div class="col-md-6">
+        <p>Let's test this information here.<p>
+      </div>
+    <div class="col-md-6">
+      <p>And also here.</p>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
