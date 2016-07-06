@@ -2,6 +2,8 @@ var CRMLJA = angular.module('CRMLJA', []);
 
 CRMLJA.controller('contentArea', ['$scope', '$http', function($scope, $http){
 
+
+
   $scope.angularWorks = function(){
     console.log('angular works');
   };
@@ -50,22 +52,35 @@ $scope.getClients = function(){
     $scope.client = response.data[0];
     console.log($scope.client);
   });
+  $http({
+    method: 'GET',
+    url: '/getCases',
+  }).then(function(responseCas){
+    console.log('cases response is');
+    $scope.cases=responseCas.data;
+    console.log($scope.cases);
+
+  });
 };
+
+
+
+
+
 $scope.getClients();
 
 }]);
 
-CRMLJA.controller('searchPage', ['$scope', '$http', function($scope, $http){
+CRMLJA.controller('searchPage', ['$scope', '$http', '$window', function($scope, $http, $window){
+
   $scope.test = function(){
     console.log("Search page works!");
   };
 
   $scope.nextPage = function(){
     console.log('made it to next page');
-    $http({
-      method: 'GET',
-      url: '/360View'
-    });
+    $window.location.href = '/';
+
   };
 
   $scope.searchClient = function(){
@@ -79,6 +94,7 @@ CRMLJA.controller('searchPage', ['$scope', '$http', function($scope, $http){
       url: '/sendClient',
       data: sendMe
     }).then(function(){
+      console.log('post call completed.');
       $scope.nextPage();
     });
 

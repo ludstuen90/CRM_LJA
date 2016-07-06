@@ -21,12 +21,16 @@
     <div id="header">
       <h2>Legal Justice Alliance</h2>
     </div>
+
     <div ng-controller="contentArea">
+      <div class="row">
+      <div class="container">
+        <div class="col-md-12">
+
       <h4>Client ID Number:</h4>
       <input type="text" ng-model="idIn"></input>
       <button type="submit" ng-click="updateClient()">Submit</button>
       <br><br>
-
         <p><b>Client Information</b></p>
         <table width="40%"><p>
           <tr>
@@ -58,52 +62,68 @@
             <td>Client ID: {{client.id}}</td>
           </tr>
         </p></table>
+      </div>
+    </div>
+  </div>
 
 <br><br>
 
-<p><b>Cases: </p></b>
-<table  id="cases">
-  <tr>
-    <td><b>Case ID:</b></td>
-    <td><b>Case Title:</b></td>
-    <td><b>Created By:</b></td>
-    <td><b>Created At:</b></td>
-  </tr>
-  <table>
 
-        <p><b>Provider/Carrier Information: </p></b>
 
-        <table id="info" ng-repeat = 'person in insurer'>
+
+  <div id="info" class="container">
+    <div class="row">
+
+      <div class="col-md-6">
+
+            <p><b>Provider/Carrier Information: </p></b>
+            <table id="info" ng-repeat = 'person in insurer'>
+              <tr>
+                <td><b>Agency</b> {{insurer[$index].provider}}</td>
+              </tr>
+              <tr>
+                <td><b>Provider Type</b> {{insurer[$index].provider_type}}
+              </tr>
+              <tr>
+                <td><b>Contact Name:</b> {{insurer[$index].first_name}} {{insurer[$index].last_name}}</td>
+              </tr>
+              <tr>
+                <td><b>Phone:</b> {{insurer[$index].phone}}</td>
+              </tr>
+              <tr>
+                <td><b>Email Address:</b> {{insurer[$index].email}}</td>
+              </tr>
+              <tr>
+                <td><b>Special notes:</b> {{insurer[$index].notes}}</td>
+              <tr>
+                <td>...</td>
+              </tr>
+            </table>
+    </div>
+
+    <div class="col-md-6">
+        <p><b>Cases: </p></b>
+        <table id="cases" >
           <tr>
-            <td><b>Agency</b> {{insurer[$index].provider}}</td>
-          </tr>
-          <tr>
-            <td><b>Provider Type</b> {{insurer[$index].provider_type}}
-          </tr>
-          <tr>
-            <td><b>Contact Name:</b> {{insurer[$index].first_name}} {{insurer[$index].last_name}}</td>
-          </tr>
-          <tr>
-            <td><b>Phone:</b> {{insurer[$index].phone}}</td>
-          </tr>
-          <tr>
-            <td><b>Email Address:</b> {{insurer[$index].email}}</td>
-          </tr>
-          <tr>
-            <td><b>Special notes:</b> {{insurer[$index].notes}}</td>
-          <tr>
-            <td>...</td>
+            <td><b>Case ID:</b></td>
+            <td><b>Case Title:</b></td>
+            <td><b>Created By:</b></td>
+            <td><b>Created At:</b></td>
           </tr>
         </table>
 
+        <table id="cases"  ng-repeat= 'thing in cases'>
+          <tr>
+            <td>{{cases[$index].id}}</td>
+            <td>{{cases[$index].title}}</td>
+            <td>{{cases[$index].created_by}}</td>
+            <td>{{cases[$index].last_modified}}
+          </tr>
+        </table>
+        </div>
+        </div>
+      </div>
 
-
-
-
-
-
-
-    </div>
 
   </body>
 </html>

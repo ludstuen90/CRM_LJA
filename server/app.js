@@ -110,6 +110,29 @@ app.get('/getClient', function(req, res){
 
 });
 
+
+app.get('/getCases', function(req, res){
+  console.log("Get case request received!");
+  resultsCase = [];
+  pg.connect(connectionString, function(err, client, done){
+    var searchCases = ('SELECT * FROM cases_meta WHERE client_id=' + global.clientId);
+    console.log("we are sending over the query");
+    console.log('SELECT * FROM cases_meta WHERE client_id=' + global.clientId);
+    var query = client.query(searchCases);
+    query.on('row', function(row){
+      resultsCase.push(row);
+    });
+    query.on('end', function(){
+      done();
+      console.log(resultsCase);
+      return res.json(resultsCase);
+    });
+    if(err){
+      console.log(err);
+    }
+  });
+});
+
 app.get('/search', function(req, res){
   res.sendFile(path.resolve('views/search.html'));
 });

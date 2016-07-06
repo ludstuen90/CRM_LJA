@@ -28,21 +28,37 @@
   padding:0 0 0 8%;
 }
 
-
+/*#info {
+  padding-left: 75px;
+}*/
 table#info{
   width:400px;
-
   }
 
 table#cases  {
     float:right;
-    width:550px;
-    display:inline;
+    width:700px;
     border:solid 2px;
-    layout:fixed;
-    /*display:inline;*/
+    display:inline;
   }
 
 table#cases  td {
-    width:500px;
+    width:100px;
   }
+
+
+table#cases  {
+      width:500px;
+      border:solid 2px;
+    }
+
+table#cases  td {
+      width:100px;
+    }
+
+table#insure {
+  /*display:inline-block;*/
+  float:left;
+
+
+}
