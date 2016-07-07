@@ -69,7 +69,7 @@
 
       <table id="caseNotes" ng-repeat = 'notes in casenotes'>
         <tr>
-          <td>{{casenotes[$index].title}}</td>
+          <td><a ng-click="noteClick(casenotes[$index].id)">{{casenotes[$index].title}}</a></td>
           <td>{{casenotes[$index].author}}</td>
           <td>{{casenotes[$index].timestamp}}</td>
         </tr>

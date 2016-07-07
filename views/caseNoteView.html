@@ -13,7 +13,7 @@
 
     <br><br>
 
-    <div ng-controller="cases">
+    <div ng-controller="caseNotes">
       <div class="row">
       <div class="container">
         <div class="col-md-6">
@@ -46,9 +46,11 @@
 
         <div class="row">
           <div class="container">
-            <div class="col-md-12">'
+            <div class="col-md-12">
+              <input id="notesTitle" type="text" readonly/>
               <textarea id="notesViewBox">
-                Veggies, Kale and all the goods.
+                {{caseNotes[]}}
+
               </textarea>
             </div>
           </div>

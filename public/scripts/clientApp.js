@@ -153,7 +153,7 @@ CRMLJA.controller('searchPage', ['$scope', '$http', '$window', function($scope, 
 }]);
 
 
-CRMLJA.controller('cases', ['$scope', '$http', function($scope, $http){
+CRMLJA.controller('cases', ['$scope', '$http', '$window', function($scope, $http, $window){
   $scope.getCases = function(){
     $http({
       method: 'GET',
@@ -182,13 +182,84 @@ console.log("Client info is...");
       $scope.casenotes = response.data;
       console.log($scope.casenotes);
     });
-
-
-
-
-
   };
 
+$scope.noteClick= function(noteId){
+  console.log("received a note click request of ", noteId);
+  noteView = {
+    view: noteId
+  };
+
+    $scope.toNotes = function(){
+        console.log('Request received to go to notes');
+        $window.location.href = '/caseNoteView';
+      };
+        $http({
+          method: 'POST',
+          url: '/noteView',
+          data: noteView
+        }).then(function(){
+            console.log('note request completed');
+            $scope.toNotes();
+        });
+
+
+
+};
+
+
   $scope.getCases();
+
+}]);
+
+
+CRMLJA.controller('caseNotes', ['$scope', '$http', '$window', function($scope, $http, $window){
+$scope.noteId = 0;
+
+$scope.noteUpdate = function(){
+  console.log("note is now", $scope.noteId);
+};
+
+$scope.noteInit= function(){
+  $http({
+    method: 'GET',
+    url: '/getClient',
+  }).then(function(response){
+    $scope.client = response.data[0];
+console.log("Client info is...");
+    console.log($scope.client);
+  });
+
+
+  $http({
+    method: 'GET',
+    url: '/caseMet',
+  }).then(function(response){
+    console.log("Now, for case meta information we are receiving...");
+    $scope.caseMeta = response.data[0];
+    console.log($scope.caseMeta);
+  });
+
+  $http({
+    method: 'GET',
+    url: '/caseDet',
+  }).then(function(response){
+    console.log("Now, for case note content we are receiving...");
+    $scope.casenotes = response.data;
+    console.log($scope.casenotes);
+  });
+
+  $http({
+    method: 'GET',
+    url: '/noteSee',
+  }).then(function(response){
+    $scope.noteId = response;
+    $noteUpdate();
+  });
+};
+
+$scope.noteInit();
+
+
 
 }]);

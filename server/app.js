@@ -7,6 +7,7 @@ app.use( bodyParser.json() );
 
 global.clientId=0;
 global.caseId=0;
+global.noteId=0;
 
 
 //include Database
@@ -84,8 +85,6 @@ search.toString();
       console.log(err);
     }
     });
-
-
 });
 
 
@@ -185,15 +184,26 @@ app.get('/caseMet', function(req, res){
 
 
 
+app.get('/noteSee', function(req, res){
+return res.json(global.noteId);
+
+});
+
+
+app.post('/noteView', function(req, res){
+  console.log("Received a note view request of", req.body.view);
+  global.noteId= req.body.view;
+  console.log('note global variable is now ', global.noteId);
+  res.sendStatus(200);
+});
+
 
 app.post('/caseParams', function(req, res){
   console.log("Request Received to go to a case");
   console.log(req.body.case_id);
   global.caseId= req.body.case_id;
   res.sendStatus(200);
-
 });
-
 
 app.get('/search', function(req, res){
   res.sendFile(path.resolve('views/search.html'));
