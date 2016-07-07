@@ -11,10 +11,7 @@
   </head>
   <body>
     <div ng-include="'partials/navbar.html'"></div>
-    <br><br>
-    <div id="header">
-      <h2>Legal Justice Alliance</h2>
-    </div>
+
 
     <div ng-controller="contentArea">
       <div class="row">
@@ -99,7 +96,7 @@
           <tr>
             <td><b>Case ID:</b></td>
             <td><b>Case Title:</b></td>
-            <td><b>Created By:</b></td>
+            <td><b>Assigned To:</b></td>
             <td><b>Created At:</b></td>
           </tr>
         </table>
@@ -108,7 +105,7 @@
           <tr>
             <td>{{cases[$index].id}}</td>
             <td><a  ng-click="caseClick(cases[$index].id)" >{{cases[$index].title}}</a></td>
-            <td>{{cases[$index].created_by}}</td>
+            <td>{{cases[$index].assigned_to}}</td>
             <td>{{cases[$index].last_modified}}
           </tr>
         </table>

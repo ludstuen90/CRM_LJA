@@ -199,6 +199,10 @@ app.get('/search', function(req, res){
   res.sendFile(path.resolve('views/search.html'));
 });
 
+app.get('/caseNoteView', function(req, res){
+  res.sendFile(path.resolve('views/caseNoteView.html'));
+});
+
 app.get('/case', function(req, res){
   res.sendFile(path.resolve('views/case.html'));
 });

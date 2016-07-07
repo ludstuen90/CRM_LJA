@@ -41,52 +41,23 @@
           </tr>
         </p></table>
       </div>
-      <div class="col-md-6">
-        <!-- <table width="100%">
-          <tr>
-            <td><br></td>
-          </tr>
-          <tr>
-            <td><b>Case ID:</b> {{caseMeta.id}}</td>
-          </tr>
-        </table> -->
-      </div>
     </div>
   </div>
-  <br>
-  <div class="row">
-    <div class="container">
-      <div class="col-md-6">
-        <h4>Summary:</h4>
-        <table id="caseMeta">
-          <tr>
-            <td><p>{{caseMeta.summary}}</p></td>
-          </tr>
-        </table>
-      </div>
-    <div class="col-md-6">
-      <h4>Case Notes:</h4>
 
-      <table id="caseNotes" ng-repeat = 'notes in casenotes'>
-        <tr>
-          <td>{{casenotes[$index].title}}</td>
-          <td>{{casenotes[$index].author}}</td>
-          <td>{{casenotes[$index].timestamp}}</td>
-        </tr>
-      </table>
-    </div>
-  </div>
-</div>
-<br>
+        <div class="row">
+          <div class="container">
+            <div class="col-md-12">'
+              <textarea id="notesViewBox">
+                Veggies, Kale and all the goods.
+              </textarea>
+            </div>
+          </div>
+        </div>
 
-<div class="row">
-  <div class="container">
-    <div class="col-md-6">
-      <b>Assigned To:</b> {{caseMeta.assigned_to}} <br>
-      <b>Created By:</b> {{caseMeta.created_by}}
-    </div>
-  </div>
-</div>
+
+
+
+<br><br>
 
 <div ng-include="'partials/footer.html'"></div>
 
