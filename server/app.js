@@ -186,6 +186,7 @@ app.get('/caseMet', function(req, res){
 
 app.get('/noteSee', function(req, res){
 return res.json(global.noteId);
+res.sendStatus(200);
 
 });
 

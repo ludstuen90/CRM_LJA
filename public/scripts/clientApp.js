@@ -202,25 +202,23 @@ $scope.noteClick= function(noteId){
             console.log('note request completed');
             $scope.toNotes();
         });
-
-
-
 };
-
-
   $scope.getCases();
-
 }]);
 
 
-CRMLJA.controller('caseNotes', ['$scope', '$http', '$window', function($scope, $http, $window){
+CRMLJA.controller('caseNotes', ['$scope', '$http', '$window', '$filter', function($scope, $http, $window, $filter){
+$scope.casenotes=[];
 $scope.noteId = 0;
-
-$scope.noteUpdate = function(){
-  console.log("note is now", $scope.noteId);
-};
-
+// PROBLEM BELOW IS THAT THE ARRAY ONLY HAS TWO ITEMS IN IT. I NEED TO FIND
+//A WAY TO LOCATE THE ITEM IN THE ARRAY, BY ID.
 $scope.noteInit= function(){
+  $scope.noteUpdate = function(){
+    console.log('now noteId is ', $scope.noteId);
+    console.log('finally,' , $scope.casenotes);
+    $scope.currentNote = $scope.casenotes[1].note;
+      console.log('current note is', $scope.currentNote);
+  };
   $http({
     method: 'GET',
     url: '/getClient',
@@ -229,8 +227,6 @@ $scope.noteInit= function(){
 console.log("Client info is...");
     console.log($scope.client);
   });
-
-
   $http({
     method: 'GET',
     url: '/caseMet',
@@ -239,27 +235,27 @@ console.log("Client info is...");
     $scope.caseMeta = response.data[0];
     console.log($scope.caseMeta);
   });
-
   $http({
     method: 'GET',
     url: '/caseDet',
   }).then(function(response){
     console.log("Now, for case note content we are receiving...");
     $scope.casenotes = response.data;
-    console.log($scope.casenotes);
-  });
+    console.log('casenotes is now!', $scope.casenotes);
+    $http({
+      method: 'GET',
+      url: '/noteSee',
+    }).then(function(response){
+      $scope.noteId = response.data;
+      console.log('after request, we declare noteId' , $scope.noteId);
+      $scope.noteUpdate();
+    });
+      });
 
-  $http({
-    method: 'GET',
-    url: '/noteSee',
-  }).then(function(response){
-    $scope.noteId = response;
-    $noteUpdate();
-  });
+
 };
 
 $scope.noteInit();
-
 
 
 }]);
