@@ -36,7 +36,7 @@ $scope.caseClick = function(index){
   console.log(index);
 
   var caseSend = {
-    case_id: index  
+    case_id: index
   };
 
     $http({
@@ -154,18 +154,41 @@ CRMLJA.controller('searchPage', ['$scope', '$http', '$window', function($scope, 
 
 
 CRMLJA.controller('cases', ['$scope', '$http', function($scope, $http){
-  $scope.getClients = function(){
+  $scope.getCases = function(){
     $http({
       method: 'GET',
       url: '/getClient',
     }).then(function(response){
-      console.log("client response is...");
-      console.log(response);
       $scope.client = response.data[0];
+console.log("Client info is...");
       console.log($scope.client);
     });
+
+
+    $http({
+      method: 'GET',
+      url: '/caseMet',
+    }).then(function(response){
+      console.log("Now, for case meta information we are receiving...");
+      $scope.caseMeta = response.data[0];
+      console.log($scope.caseMeta);
+    });
+
+    $http({
+      method: 'GET',
+      url: '/caseDet',
+    }).then(function(response){
+      console.log("Now, for case note content we are receiving...");
+      $scope.casenotes = response.data;
+      console.log($scope.casenotes);
+    });
+
+
+
+
+
   };
 
-  $scope.getClients();
+  $scope.getCases();
 
 }]);

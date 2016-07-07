@@ -134,9 +134,62 @@ app.get('/getCases', function(req, res){
   });
 });
 
+
+app.get('/caseDet', function(req, res){
+  console.log("Get case request received!");
+  resultsCaseNot = [];
+  pg.connect(connectionString, function(err, client, done){
+    var searchCaseNotes = ('SELECT * FROM cases_notes WHERE case_id=' + global.caseId);
+    console.log("we are sending over the query");
+    console.log('SELECT * FROM cases_notes WHERE case_id=' + global.caseId);
+    var query = client.query(searchCaseNotes);
+    query.on('row', function(row){
+      resultsCaseNot.push(row);
+    });
+    query.on('end', function(){
+      done();
+      console.log("And the results from case notes will be ...");
+      console.log(resultsCaseNot);
+      return res.json(resultsCaseNot);
+    });
+    if(err){
+      console.log(err);
+    }
+  });
+});
+
+
+
+app.get('/caseMet', function(req, res){
+  console.log("Get case request received!");
+  resultsCaseMet = [];
+  pg.connect(connectionString, function(err, client, done){
+    var searchCaseMeta = ('SELECT * FROM cases_meta WHERE id=' + global.caseId);
+    console.log("we are sending over the query");
+    console.log('SELECT * FROM cases_meta WHERE id=' + global.caseId);
+    var query = client.query(searchCaseMeta);
+    query.on('row', function(row){
+      resultsCaseMet.push(row);
+    });
+    query.on('end', function(){
+      done();
+      console.log('and the results for case meta informatio will be...');
+      console.log(resultsCaseMet);
+      return res.json(resultsCaseMet);
+    });
+    if(err){
+      console.log(err);
+    }
+  });
+});
+
+
+
+
 app.post('/caseParams', function(req, res){
   console.log("Request Received to go to a case");
   console.log(req.body.case_id);
+  global.caseId= req.body.case_id;
   res.sendStatus(200);
 
 });

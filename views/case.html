@@ -53,17 +53,43 @@
       </div>
     </div>
   </div>
-  <br><br>
+  <br>
   <div class="row">
     <div class="container">
       <div class="col-md-6">
-        <p>Let's test this information here.<p>
+        <h4>Summary:</h4>
+        <table id="caseMeta">
+          <tr>
+            <td><p>{{caseMeta.summary}}</p></td>
+          </tr>
+        </table>
       </div>
     <div class="col-md-6">
-      <p>And also here.</p>
+      <h4>Case Notes:</h4>
+
+      <table id="caseNotes" ng-repeat = 'notes in casenotes'>
+        <tr>
+          <td>{{casenotes[$index].title}}</td>
+          <td>{{casenotes[$index].author}}</td>
+          <td>{{casenotes[$index].timestamp}}</td>
+        </tr>
+      </table>
     </div>
   </div>
 </div>
+<br>
+
+<div class="row">
+  <div class="container">
+    <div class="col-md-6">
+      <b>Assigned To:</b> {{caseMeta.assigned_to}} <br>
+      <b>Created By:</b> {{caseMeta.created_by}}
+    </div>
+  </div>
+</div>
+
+<div ng-include="'partials/footer.html'"></div>
+
 
 </body>
 </html>

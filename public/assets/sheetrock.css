@@ -59,6 +59,32 @@ table#cases  td {
 table#insure {
   /*display:inline-block;*/
   float:left;
+}
 
+table#caseNotes {
+  border:2px solid;
+  width:500px;
+  table-layout:fixed;
 
+}
+#caseNotes th, td {
+  padding:3px;
+}
+
+table#caseMeta {
+  border:2px solid;
+  table-layout:fixed;
+  width:350px;
+  height:250px;
+  vertical-align:top;
+  text-align:left;
+  padding:0;
+}
+
+td, th#caseMeta{
+  vertical-align:top;
+}
+
+#credits {
+  text-align:center;
 }
