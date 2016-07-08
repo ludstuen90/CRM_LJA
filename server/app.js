@@ -186,8 +186,6 @@ app.get('/caseMet', function(req, res){
 
 app.get('/noteSee', function(req, res){
 return res.json(global.noteId);
-res.sendStatus(200);
-
 });
 
 
@@ -198,6 +196,48 @@ app.post('/noteView', function(req, res){
   res.sendStatus(200);
 });
 
+
+app.post('/newCase', function(req, res){
+  console.log('received a case create request');
+  console.log('author is ', req.body.author);
+  console.log('assigned to ', req.body.assigned);
+  console.log('claim number ', req.body.claimNo);
+  console.log('summary', req.body.resumen);
+
+  pg.connect(connectionString, function(err, client, done){
+    client.query ('INSERT INTO cases_meta (created_by, assigned_to, claim_no, summary, client_id, open, title) VALUES ($1, $2, $3, $4, $5, $6, $7)', [req.body.author, req.body.assigned, req.body.claimNo, req.body.resumen, global.clientId, 'true', req.body.title ]);
+    done();
+  });
+  res.sendStatus(200);
+});
+
+app.get('/getLastVal', function(req, res){console.log("Get case request received!");
+getVal = [];
+pg.connect(connectionString, function(err, client, done){
+  var getValQuery = ('SELECT lastval() id FROM cases_meta');
+  console.log("we are sending over the query");
+  console.log('SELECT * FROM cases_meta WHERE id=' + global.caseId);
+  var query = client.query(getValQuery);
+  query.on('row', function(row){
+    getVal.push(row);
+  });
+  query.on('end', function(){
+    done();
+    console.log('and the results for case meta informatio will be...');
+    console.log(getVal);
+    return res.json(getVal);
+  });
+  if(err){
+    console.log(err);
+  }
+});
+
+
+
+  client.query();
+
+
+});
 
 app.post('/caseParams', function(req, res){
   console.log("Request Received to go to a case");
@@ -220,6 +260,10 @@ app.get('/case', function(req, res){
 
 app.get('/360', function(req, res){
   res.sendFile(path.resolve('views/360.html'));
+});
+
+app.get('/caseCreate', function(req, res){
+  res.sendFile(path.resolve('views/caseCreate.html'));
 });
 
 //Assign Static Folder

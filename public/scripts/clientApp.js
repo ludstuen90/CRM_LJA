@@ -27,32 +27,32 @@ var CRMLJA = angular.module('CRMLJA', []);
 
 CRMLJA.controller('contentArea', ['$scope', '$http', '$window', function($scope, $http, $window){
 
-  $scope.angularWorks = function(){
-    console.log('angular works');
-  };
+      $scope.angularWorks = function(){
+        console.log('angular works');
+      };
 
-$scope.caseClick = function(index){
-  console.log("received request at caseClick of: ");
-  console.log(index);
+    $scope.caseClick = function(index){
+      console.log("received request at caseClick of: ");
+      console.log(index);
 
-  var caseSend = {
-    case_id: index
-  };
+      var caseSend = {
+        case_id: index
+      };
 
-    $http({
-      method: 'POST',
-      url: '/caseParams',
-      data: caseSend
-    }).then(function(){
-      console.log('Now we will go to the case');
-      $scope.toCase();
+        $http({
+          method: 'POST',
+          url: '/caseParams',
+          data: caseSend
+        }).then(function(){
+          console.log('Now we will go to the case');
+          $scope.toCase();
 
-    });
+        });
 
 
-  $scope.toCase = function(){
-    $window.location.href = '/case';
-  };
+      $scope.toCase = function(){
+        $window.location.href = '/case';
+      };
 };
 
 $scope.updateClient = function(){
@@ -154,56 +154,56 @@ CRMLJA.controller('searchPage', ['$scope', '$http', '$window', function($scope, 
 
 
 CRMLJA.controller('cases', ['$scope', '$http', '$window', function($scope, $http, $window){
-  $scope.getCases = function(){
-    $http({
-      method: 'GET',
-      url: '/getClient',
-    }).then(function(response){
-      $scope.client = response.data[0];
-console.log("Client info is...");
-      console.log($scope.client);
-    });
+        $scope.getCases = function(){
+          $http({
+            method: 'GET',
+            url: '/getClient',
+          }).then(function(response){
+            $scope.client = response.data[0];
+      console.log("Client info is...");
+            console.log($scope.client);
+          });
 
 
-    $http({
-      method: 'GET',
-      url: '/caseMet',
-    }).then(function(response){
-      console.log("Now, for case meta information we are receiving...");
-      $scope.caseMeta = response.data[0];
-      console.log($scope.caseMeta);
-    });
+          $http({
+            method: 'GET',
+            url: '/caseMet',
+          }).then(function(response){
+            console.log("Now, for case meta information we are receiving...");
+            $scope.caseMeta = response.data[0];
+            console.log($scope.caseMeta);
+          });
 
-    $http({
-      method: 'GET',
-      url: '/caseDet',
-    }).then(function(response){
-      console.log("Now, for case note content we are receiving...");
-      $scope.casenotes = response.data;
-      console.log($scope.casenotes);
-    });
-  };
+          $http({
+            method: 'GET',
+            url: '/caseDet',
+          }).then(function(response){
+            console.log("Now, for case note content we are receiving...");
+            $scope.casenotes = response.data;
+            console.log($scope.casenotes);
+          });
+        };
 
-$scope.noteClick= function(noteId){
-  console.log("received a note click request of ", noteId);
-  noteView = {
-    view: noteId
-  };
+      $scope.noteClick= function(noteId){
+        console.log("received a note click request of ", noteId);
+        noteView = {
+          view: noteId
+        };
 
-    $scope.toNotes = function(){
-        console.log('Request received to go to notes');
-        $window.location.href = '/caseNoteView';
+          $scope.toNotes = function(){
+              console.log('Request received to go to notes');
+              $window.location.href = '/caseNoteView';
+            };
+              $http({
+                method: 'POST',
+                url: '/noteView',
+                data: noteView
+              }).then(function(){
+                  console.log('note request completed');
+                  $scope.toNotes();
+              });
       };
-        $http({
-          method: 'POST',
-          url: '/noteView',
-          data: noteView
-        }).then(function(){
-            console.log('note request completed');
-            $scope.toNotes();
-        });
-};
-  $scope.getCases();
+        $scope.getCases();
 }]);
 
 
@@ -212,20 +212,71 @@ $scope.casenotes=[];
 $scope.noteId = 0;
 
 
-$scope.seeNote= function(noteId){
-  console.log("received a note click request of ", noteId);
-  noteView = {
-    view: noteId
-  };
+      $scope.seeNote= function(noteId){
+        console.log("received a note click request of ", noteId);
+        noteView = {
+          view: noteId
+        };
 
-    $scope.toNotes = function(){
-        console.log('Request received to go to notes');
+          $scope.toNotes = function(){
+              console.log('Request received to go to notes');
+            };
+              $http({
+                method: 'POST',
+                url: '/noteView',
+                data: noteView
+              }).then(function(){
+                $http({
+                  method: 'GET',
+                  url: '/noteSee',
+                }).then(function(response){
+                  $scope.noteId = response.data;
+                  console.log('after request, we declare noteId' , $scope.noteId);
+                  $scope.findNote();
+                });
+              });
+
+              $scope.toNotes();
       };
+
+      $scope.findNote = function() {
+        for (var i=0; i<$scope.casenotes.length; i++){
+          console.log('at position ', i, 'the scope is', $scope.casenotes[i].id, 'and the noteId is ', $scope.noteId);
+          if ($scope.casenotes[i].id === $scope.noteId) {
+            console.log('long form', $scope.casenotes[i].note);
+            $scope.currentNote = $scope.casenotes[i].note;
+            $scope.currentTitle = $scope.casenotes[i].title;
+            console.log('marshalled variable', $scope.currentNote);
+          }
+        }
+      };
+
+
+      $scope.noteInit= function(){
+
         $http({
-          method: 'POST',
-          url: '/noteView',
-          data: noteView
-        }).then(function(){
+          method: 'GET',
+          url: '/getClient',
+        }).then(function(response){
+          $scope.client = response.data[0];
+      console.log("Client info is...");
+          console.log($scope.client);
+        });
+        $http({
+          method: 'GET',
+          url: '/caseMet',
+        }).then(function(response){
+          console.log("Now, for case meta information we are receiving...");
+          $scope.caseMeta = response.data[0];
+          console.log($scope.caseMeta);
+        });
+        $http({
+          method: 'GET',
+          url: '/caseDet',
+        }).then(function(response){
+          console.log("Now, for case note content we are receiving...");
+          $scope.casenotes = response.data;
+          console.log('casenotes is now!', $scope.casenotes);
           $http({
             method: 'GET',
             url: '/noteSee',
@@ -234,63 +285,57 @@ $scope.seeNote= function(noteId){
             console.log('after request, we declare noteId' , $scope.noteId);
             $scope.findNote();
           });
-        });
-
-        $scope.toNotes();
-};
-
-$scope.findNote = function() {
-  for (var i=0; i<$scope.casenotes.length; i++){
-    console.log('at position ', i, 'the scope is', $scope.casenotes[i].id, 'and the noteId is ', $scope.noteId);
-    if ($scope.casenotes[i].id === $scope.noteId) {
-      console.log('long form', $scope.casenotes[i].note);
-      $scope.currentNote = $scope.casenotes[i].note;
-      $scope.currentTitle = $scope.casenotes[i].title;
-      console.log('marshalled variable', $scope.currentNote);
-    }
-  }
-};
+            });
 
 
-$scope.noteInit= function(){
+      };
 
+      $scope.noteInit();
+
+}]);
+
+
+CRMLJA.controller('caseCreate', ['$scope', '$http', '$window', function($scope, $http, $window){
   $http({
     method: 'GET',
     url: '/getClient',
   }).then(function(response){
     $scope.client = response.data[0];
-console.log("Client info is...");
+  console.log("Client info is...");
     console.log($scope.client);
   });
-  $http({
-    method: 'GET',
-    url: '/caseMet',
-  }).then(function(response){
-    console.log("Now, for case meta information we are receiving...");
-    $scope.caseMeta = response.data[0];
-    console.log($scope.caseMeta);
-  });
-  $http({
-    method: 'GET',
-    url: '/caseDet',
-  }).then(function(response){
-    console.log("Now, for case note content we are receiving...");
-    $scope.casenotes = response.data;
-    console.log('casenotes is now!', $scope.casenotes);
+
+
+
+
+  $scope.caseCreate = function(){
+    var caseCreate = {
+      title: $scope.title,
+      author: $scope.author,
+      assigned: $scope.assignedTo,
+      claimNo: $scope.claimNo,
+      resumen: $scope.resumen
+    };
+    console.log(caseCreate);
+
+
     $http({
-      method: 'GET',
-      url: '/noteSee',
-    }).then(function(response){
-      $scope.noteId = response.data;
-      console.log('after request, we declare noteId' , $scope.noteId);
-      $scope.findNote();
+      method: 'POST',
+      url: '/newCase',
+      data: caseCreate
+    }).then(function(){
+      // $http({
+      //   method: 'GET',
+      //   url: '/noteSee',
+      // }).then(function(response){
+      //   $scope.noteId = response.data;
+        console.log('finished case create');
+        // $scope.findNote();
+      // });
     });
-      });
 
 
-};
-
-$scope.noteInit();
+  };
 
 
 

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html ng-app="CRMLJA">
+  <head>
+    <meta charset="utf-8">
+    <title>Client 360 Page</title>
+    <script type="text/javascript" src="vendors/angular.min.js"></script>
+    <script type="text/javascript" src="scripts/clientApp.js"></script>
+    <link rel="stylesheet" href="vendors/bootstrap.min.css"></link>
+    <link rel="stylesheet" href="assets/sheetrock.css"></link>
+  </head>
+  <body>
+    <div ng-include="'partials/navbar.html'"></div>
+
+    <br><br>
+<!--
+    <div class="row">
+      <div class="container">
+        <div class="col-md-12">
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="/case">Case</a></li>
+            <li><a href="/caseNoteView">Case Notes</a></li>
+          </ul>
+        </div>
+      </div>
+    </div> -->
+<br>
+<div ng-controller="caseCreate">
+      <div class="row">
+      <div class="container">
+        <div class="col-md-12">
+        <p><b>Client Information</b></p>
+        <table width="40%"><p>
+          <tr>
+            <td>
+            {{client.first_name}} {{client.last_name}}
+            </td>
+            <td>
+              {{client.phone}}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              {{client.address}}
+            </td>
+            <td>
+            {{client.address2}}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              {{client.city}} , {{client.state}}
+            </td>
+            <td>
+              {{client.email}}
+            </td>
+          </tr>
+          <tr>
+            <td>Claim Number: {{client.claim_num}}</td>
+            <td>Client ID: {{client.id}}</td>
+          </tr>
+        </p></table>
+      </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="container">
+    <div class="col-md-12">
+
+<br>
+      <table id="createCaseLayout">
+        <tr>
+      <td><b>Author</b></td><td> <input type="text" id="caseCrtMnText" ng-model="author" placeholder="Author"></input></td>
+      </tr>
+      <tr>
+      <td><b>Assigned To</b>:</td><td> <input type="text" id="caseCrtMnText" ng-model="assignedTo" placeholder="Assigned To"></input></td>
+    </tr>
+    <tr>
+      <td><b>Claim Number</b>:</td><td> <input type="text" id="caseCrtMnText" ng-model="claimNo" placeholder="Claim Number"></input></td>
+    </tr>
+    <tr>
+      <td><b>Title</b>:</td><td> <input type="text" id="caseCrtMnText" ng-model="title" placeholder="Title"></input></td>
+    </tr>
+    <tr>
+      <td><b>Summary</b></td><td><textarea id="caseCrtText" id="caseCrtMnText" ng-model="resumen"></textarea></td>
+    </tr>
+  </table>
+
+      <br>
+      <button type="submit" ng-click="caseCreate()">Save Case</button>
+
+    </div>
+  </div>
+</div>
+
+
+<div ng-include="'partials/footer.html'"></div>
+
+
+</body>
+</html>

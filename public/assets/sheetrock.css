@@ -107,5 +107,27 @@ table#moreCaseNotes {
   border:2px solid;
   width:100%;
   table-layout:fixed;
+}
 
+table#createCaseLayout{
+  border:2px solid;
+  table-layout:fixed;
+
+}
+
+#createCaseLayout{
+  padding:10px 10px 10px 10px;
+  margin:10px 10px 10px 10px;
+}
+
+#caseCrtText {
+  margin-right:20px;
+  margin-left:20px;
+
+  width:200px;
+  height:300px;
+}
+
+#caseCrtMnText {
+  width:100%;
 }
