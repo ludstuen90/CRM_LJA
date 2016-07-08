@@ -214,10 +214,21 @@ $scope.noteId = 0;
 //A WAY TO LOCATE THE ITEM IN THE ARRAY, BY ID.
 $scope.noteInit= function(){
   $scope.noteUpdate = function(){
-    console.log('now noteId is ', $scope.noteId);
-    console.log('finally,' , $scope.casenotes);
-    $scope.currentNote = $scope.casenotes[1].note;
-      console.log('current note is', $scope.currentNote);
+
+    $scope.findNote = function() {
+      for (var i=0; i<$scope.casenotes.length; i++){
+        console.log('at position ', i, 'the scope is', $scope.casenotes[i].id);
+        if ($scope.casenotes[i].id === $scope.noteId) {
+          console.log('long form', $scope.casenotes[i].note);
+          $scope.currentNote = $scope.casenotes[i].note;
+          $scope.currentTitle = $scope.casenotes[i].title; 
+          console.log('marshalled variable', $scope.currentNote);
+        }
+      }
+    };
+
+    $scope.findNote();
+
   };
   $http({
     method: 'GET',
