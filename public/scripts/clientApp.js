@@ -324,6 +324,17 @@ CRMLJA.controller('caseCreate', ['$scope', '$http', '$window', function($scope, 
       url: '/newCase',
       data: caseCreate
     }).then(function(){
+
+      $http({
+        method:'GET',
+        url: '/getLastVal',
+      }).then(function(){
+        $window.location.href = '/case';
+
+      });
+
+<p><a href="uglyDataLink">Click to see 
+
       // $http({
       //   method: 'GET',
       //   url: '/noteSee',

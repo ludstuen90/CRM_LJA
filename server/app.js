@@ -214,29 +214,26 @@ app.post('/newCase', function(req, res){
 app.get('/getLastVal', function(req, res){console.log("Get case request received!");
 getVal = [];
 pg.connect(connectionString, function(err, client, done){
-  var getValQuery = ('SELECT lastval() id FROM cases_meta');
-  console.log("we are sending over the query");
-  console.log('SELECT * FROM cases_meta WHERE id=' + global.caseId);
-  var query = client.query(getValQuery);
-  query.on('row', function(row){
-    getVal.push(row);
-  });
-  query.on('end', function(){
-    done();
-    console.log('and the results for case meta informatio will be...');
-    console.log(getVal);
-    return res.json(getVal);
-  });
   if(err){
     console.log(err);
   }
-});
-
-
-
-  client.query();
-
-
+  else {
+    var getValQuery = ('select id from cases_meta ORDER BY id DESC limit 1');
+    console.log("we are sending over the query");
+    console.log(getValQuery);
+    var query = client.query(getValQuery);
+    query.on('row', function(row){
+      getVal.push(row);
+    });
+    query.on('end', function(){
+      done();
+      console.log('and the results for case meta information will be...');
+      console.log(getVal[0].id);
+      global.caseId = getVal[0].id;
+      return res.json(getVal);
+      });
+    }
+  });
 });
 
 app.post('/caseParams', function(req, res){
