@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td><b>Claim Number:</b> {{client.claim_num}}</td>
-              <td><b>Case ID:</b> {{caseMeta.id}}</td>
+              <td><b><a href="/case">Case ID:</b> {{caseMeta.id}}</a></td>
           </tr>
         </p></table>
       </div>
@@ -55,6 +55,33 @@
           </div>
         </div>
 
+
+        <div class="row">
+          <div class="container">
+            <div class="col-md-12">
+
+              <p><b>Cases: </p></b>
+              <table id="moreCaseNotes" >
+                <tr>
+                  <td><b>Title:</b></td>
+                  <td><b>Author:</b></td>
+                  <td><b>Created At:</b></td>
+                </tr>
+              </table>
+
+
+              <table id="moreCaseNotes" ng-repeat = 'notes in casenotes'>
+                <tr>
+                  <td><a ng-click="seeNote(casenotes[$index].id)">{{casenotes[$index].title}}</a></td>
+                  <td>{{casenotes[$index].author}}</td>
+                  <td>{{casenotes[$index].timestamp}}</td>
+                </tr>
+              </table>
+
+
+            </div>
+          </div>
+        </div>
 
 
 

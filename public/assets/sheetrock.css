@@ -101,3 +101,11 @@ td, th#caseMeta{
 #notesTitle {
   width:450px;
 }
+
+
+table#moreCaseNotes {
+  border:2px solid;
+  width:100%;
+  table-layout:fixed;
+
+}

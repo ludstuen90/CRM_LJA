@@ -210,26 +210,50 @@ $scope.noteClick= function(noteId){
 CRMLJA.controller('caseNotes', ['$scope', '$http', '$window', '$filter', function($scope, $http, $window, $filter){
 $scope.casenotes=[];
 $scope.noteId = 0;
-// PROBLEM BELOW IS THAT THE ARRAY ONLY HAS TWO ITEMS IN IT. I NEED TO FIND
-//A WAY TO LOCATE THE ITEM IN THE ARRAY, BY ID.
-$scope.noteInit= function(){
-  $scope.noteUpdate = function(){
 
-    $scope.findNote = function() {
-      for (var i=0; i<$scope.casenotes.length; i++){
-        console.log('at position ', i, 'the scope is', $scope.casenotes[i].id);
-        if ($scope.casenotes[i].id === $scope.noteId) {
-          console.log('long form', $scope.casenotes[i].note);
-          $scope.currentNote = $scope.casenotes[i].note;
-          $scope.currentTitle = $scope.casenotes[i].title; 
-          console.log('marshalled variable', $scope.currentNote);
-        }
-      }
-    };
 
-    $scope.findNote();
-
+$scope.seeNote= function(noteId){
+  console.log("received a note click request of ", noteId);
+  noteView = {
+    view: noteId
   };
+
+    $scope.toNotes = function(){
+        console.log('Request received to go to notes');
+      };
+        $http({
+          method: 'POST',
+          url: '/noteView',
+          data: noteView
+        }).then(function(){
+          $http({
+            method: 'GET',
+            url: '/noteSee',
+          }).then(function(response){
+            $scope.noteId = response.data;
+            console.log('after request, we declare noteId' , $scope.noteId);
+            $scope.findNote();
+          });
+        });
+
+        $scope.toNotes();
+};
+
+$scope.findNote = function() {
+  for (var i=0; i<$scope.casenotes.length; i++){
+    console.log('at position ', i, 'the scope is', $scope.casenotes[i].id, 'and the noteId is ', $scope.noteId);
+    if ($scope.casenotes[i].id === $scope.noteId) {
+      console.log('long form', $scope.casenotes[i].note);
+      $scope.currentNote = $scope.casenotes[i].note;
+      $scope.currentTitle = $scope.casenotes[i].title;
+      console.log('marshalled variable', $scope.currentNote);
+    }
+  }
+};
+
+
+$scope.noteInit= function(){
+
   $http({
     method: 'GET',
     url: '/getClient',
@@ -259,7 +283,7 @@ console.log("Client info is...");
     }).then(function(response){
       $scope.noteId = response.data;
       console.log('after request, we declare noteId' , $scope.noteId);
-      $scope.noteUpdate();
+      $scope.findNote();
     });
       });
 
@@ -267,6 +291,8 @@ console.log("Client info is...");
 };
 
 $scope.noteInit();
+
+
 
 
 }]);
