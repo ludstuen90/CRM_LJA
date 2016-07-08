@@ -218,5 +218,9 @@ app.get('/case', function(req, res){
   res.sendFile(path.resolve('views/case.html'));
 });
 
+app.get('/360', function(req, res){
+  res.sendFile(path.resolve('views/360.html'));
+});
+
 //Assign Static Folder
 app.use( express.static('public'));

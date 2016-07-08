@@ -125,7 +125,7 @@ CRMLJA.controller('searchPage', ['$scope', '$http', '$window', function($scope, 
 
         $scope.nextPage = function(){
           console.log('made it to next page');
-          $window.location.href = '/';
+          $window.location.href = '/360';
 
         };
 

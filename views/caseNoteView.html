@@ -13,6 +13,18 @@
 
     <br><br>
 
+    <div class="row">
+      <div class="container">
+        <div class="col-md-12">
+          <ul class="nav nav-tabs">
+            <li><a href="/case">Case</a></li>
+            <li class="active"><a href="/caseNoteView">Case Notes</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+<br>
+
     <div ng-controller="caseNotes">
       <div class="row">
       <div class="container">
@@ -37,7 +49,7 @@
           </tr>
           <tr>
             <td><b>Claim Number:</b> {{client.claim_num}}</td>
-              <td><b><a href="/case">Case ID:</b> {{caseMeta.id}}</a></td>
+              <td><b>Case ID:</b> {{caseMeta.id}}</td>
           </tr>
         </p></table>
       </div>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html ng-app="CRMLJA">
+  <head>
+    <meta charset="utf-8">
+    <title>Client 360 Page</title>
+    <script type="text/javascript" src="vendors/angular.min.js"></script>
+    <script type="text/javascript" src="scripts/clientApp.js"></script>
+    <link rel="stylesheet" href="vendors/bootstrap.min.css"></link>
+    <link rel="stylesheet" href="assets/sheetrock.css"></link>
+
+  </head>
+  <body>
+    <div ng-include="'partials/navbar.html'"></div>
+
+
+    <div ng-controller="contentArea">
+      <div class="row">
+      <div class="container">
+        <div class="col-md-12">
+
+      <!-- <h4>Client ID Number:</h4>
+      <input type="text" ng-model="idIn"></input>
+      <button type="submit" ng-click="updateClient()">Submit</button> -->
+        <p><b>Client Information</b></p>
+        <table width="40%"><p>
+          <tr>
+            <td>
+            {{client.first_name}} {{client.last_name}}
+            </td>
+            <td>
+              {{client.phone}}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              {{client.address}}
+            </td>
+            <td>
+            {{client.address2}}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              {{client.city}} , {{client.state}}
+            </td>
+            <td>
+              {{client.email}}
+            </td>
+          </tr>
+          <tr>
+            <td>Claim Number: {{client.claim_num}}</td>
+            <td>Client ID: {{client.id}}</td>
+          </tr>
+        </p></table>
+      </div>
+    </div>
+  </div>
+
+<br><br>
+
+
+
+
+  <div id="info" class="container">
+    <div class="row">
+
+      <div class="col-md-6">
+            <p><b>Provider/Carrier Information: </p></b>
+            <table id="info" ng-repeat = 'person in insurer'>
+              <tr>
+                <td><b>Agency</b> {{insurer[$index].provider}}</td>
+              </tr>
+              <tr>
+                <td><b>Provider Type</b> {{insurer[$index].provider_type}}
+              </tr>
+              <tr>
+                <td><b>Contact Name:</b> {{insurer[$index].first_name}} {{insurer[$index].last_name}}</td>
+              </tr>
+              <tr>
+                <td><b>Phone:</b> {{insurer[$index].phone}}</td>
+              </tr>
+              <tr>
+                <td><b>Email Address:</b> {{insurer[$index].email}}</td>
+              </tr>
+              <tr>
+                <td><b>Special notes:</b> {{insurer[$index].notes}}</td>
+              <tr>
+                <td>...</td>
+              </tr>
+            </table>
+    </div>
+
+    <div class="col-md-6">
+        <p><b>Cases: </p></b>
+        <table id="cases" >
+          <tr>
+            <td><b>Case ID:</b></td>
+            <td><b>Case Title:</b></td>
+            <td><b>Assigned To:</b></td>
+            <td><b>Created At:</b></td>
+          </tr>
+        </table>
+
+        <table id="cases"  ng-repeat= 'thing in cases'>
+          <tr>
+            <td>{{cases[$index].id}}</td>
+            <td><a  ng-click="caseClick(cases[$index].id)" >{{cases[$index].title}}</a></td>
+            <td>{{cases[$index].assigned_to}}</td>
+            <td>{{cases[$index].last_modified}}
+          </tr>
+        </table>
+        </div>
+        </div>
+      </div>
+
+      <div ng-include="'partials/footer.html'"></div>
+
+
+  </body>
+</html>
