@@ -1,0 +1,2 @@
+Add Error validation to "add note feature"
+Make so case note loads automatically

@@ -291,21 +291,20 @@ $scope.noteId = 0;
       };
 
       $scope.noteInit();
+      // $scope.seeNote(casenotes[2].id);
 
 }]);
 
 
 CRMLJA.controller('caseCreate', ['$scope', '$http', '$window', function($scope, $http, $window){
-  $http({
-    method: 'GET',
-    url: '/getClient',
-  }).then(function(response){
-    $scope.client = response.data[0];
-  console.log("Client info is...");
-    console.log($scope.client);
-  });
-
-
+      $http({
+        method: 'GET',
+        url: '/getClient',
+      }).then(function(response){
+        $scope.client = response.data[0];
+        console.log("Client info is...");
+        console.log($scope.client);
+      });
 
 
   $scope.caseCreate = function(){
@@ -333,7 +332,6 @@ CRMLJA.controller('caseCreate', ['$scope', '$http', '$window', function($scope, 
 
       });
 
-<p><a href="uglyDataLink">Click to see 
 
       // $http({
       //   method: 'GET',
@@ -344,11 +342,44 @@ CRMLJA.controller('caseCreate', ['$scope', '$http', '$window', function($scope, 
         // $scope.findNote();
       // });
     });
-
-
   };
+}]);
 
 
+CRMLJA.controller('addNote', ['$scope', '$http', '$window', function($scope, $http, $window){
+      $scope.initial = function(){
+        $http({
+          method: 'GET',
+          url: '/getClient',
+        }).then(function(response){
+          $scope.client = response.data[0];
+        console.log("Client info is...");
+          console.log($scope.client);
+        });
+      };
+
+      $scope.initial();
+
+
+      $scope.noteSubmit= function(){
+        var newNote = {
+          noteTitle: $scope.createNoteTitle,
+          noteContents: $scope.addedNote,
+          noteAuthor: $scope.createNoteAuthor
+        };
+
+
+        $http({
+          method: 'POST',
+          url: '/newCaseNote',
+          data: newNote
+        }).then(function(){
+            $window.location.href = '/caseNoteView';
+        });
+
+        console.log('note title is ', $scope.createNoteTitle, 'the author is ', $scope.createNoteAuthor, ' and the body is ', $scope.addedNote);
+
+      };
 
 
 }]);

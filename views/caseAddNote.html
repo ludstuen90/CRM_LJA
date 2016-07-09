@@ -18,17 +18,17 @@
         <div class="col-md-12">
           <ul class="nav nav-tabs">
             <li><a href="/case">Case</a></li>
-            <li class="active"><a href="/caseNoteView">Case Notes</a></li>
-            <li><a href="/caseAddNote">Add Note</a></li>
+            <li><a href="/caseNoteView">Case Notes</a></li>
+            <li class="active"><a href="/caseAddNote">Add Note</a></li>
           </ul>
         </div>
       </div>
     </div>
 <br>
 
-    <div ng-controller="caseNotes">
+<div ng-controller="addNote">
       <div class="row">
-      <div class="container" ng-init="seeNote(casenotes[1].id)">
+      <div class="container">
         <div class="col-md-6">
         <p><b>Client Information</b></p>
         <table width="100%"><p>
@@ -60,41 +60,21 @@
         <div class="row">
           <div class="container">
             <div class="col-md-12">
-              <input id="notesTitle" value={{currentTitle}} type="text" readonly/>
-              <textarea readonly id="notesViewBox">
-                {{currentNote}}
+              <input ng-model="createNoteTitle" id="createNoteTitle" placeholder="Note Title" type="text"/>
+              <textarea ng-model="addedNote" id="addNoteField">
               </textarea>
-            </div>
-          </div>
-        </div>
 
+              <input ng-model="createNoteAuthor" id="createNoteAuthor" placeholder="Author" type="text",>
 
-        <div class="row">
-          <div class="container">
-            <div class="col-md-12">
-
-              <p><b>Cases: </p></b>
-              <table id="moreCaseNotes" >
-                <tr>
-                  <td><b>Title:</b></td>
-                  <td><b>Author:</b></td>
-                  <td><b>Created At:</b></td>
-                </tr>
-              </table>
-
-
-              <table id="moreCaseNotes" ng-repeat = 'notes in casenotes'>
-                <tr>
-                  <td><a ng-click="seeNote(casenotes[$index].id)">{{casenotes[$index].title}}</a></td>
-                  <td>{{casenotes[$index].author}}</td>
-                  <td>{{casenotes[$index].timestamp}}</td>
-                </tr>
-              </table>
-
+              <button type="submit" ng-click="noteSubmit()">Submit Note</button>
 
             </div>
           </div>
         </div>
+</div>
+
+
+
 
 
 

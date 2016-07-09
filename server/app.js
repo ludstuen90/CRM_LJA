@@ -243,6 +243,25 @@ app.post('/caseParams', function(req, res){
   res.sendStatus(200);
 });
 
+app.post('/newCaseNote', function(req, res){
+  // console.log('note title is ', req.body.noteTitle , 'and the author is ', req.body.noteAuthor, ', and the body is ', req.body.noteContents);
+
+pg.connect(connectionString, function(err, client, done){
+  client.query('INSERT INTO cases_notes (case_id, title, note, author) VALUES ($1, $2, $3, $4)', [global.caseId, req.body.noteTitle, req.body.noteContents, req.body.noteAuthor ]);
+});
+
+//
+//   pg.connect(connectionString, function(err, client, done){
+//     client.query ('INSERT INTO cases_meta (created_by, assigned_to, claim_no, summary, client_id, open, title) VALUES ($1, $2, $3, $4, $5, $6, $7)', [req.body.author, req.body.assigned, req.body.claimNo, req.body.resumen, global.clientId, 'true', req.body.title ]);
+//     done();
+//   });
+  res.sendStatus(200);
+
+});
+
+
+
+
 app.get('/search', function(req, res){
   res.sendFile(path.resolve('views/search.html'));
 });
@@ -261,6 +280,10 @@ app.get('/360', function(req, res){
 
 app.get('/caseCreate', function(req, res){
   res.sendFile(path.resolve('views/caseCreate.html'));
+});
+
+app.get('/caseAddNote', function(req, res){
+  res.sendFile(path.resolve('views/caseAddNote.html'));
 });
 
 //Assign Static Folder
