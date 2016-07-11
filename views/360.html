@@ -112,10 +112,17 @@
     </div>
 
     <div class="col-md-6">
-        <p><b>Cases: </p></b>
+          <table id="casesNoBorder"><tr><td><b>Cases: </b></td><td><select id="selectDop" width="100%" ng-model="statusOfTheCase">
+          <option value="open">Open</option>
+          <option value="closed">Closed</option>
+          <option value="canceled">Canceled</option>
+        </select></td>
+      </tr>
+    </table>
         <table id="cases" >
           <tr>
             <td><b>Case ID:</b></td>
+            <td><b>Case Status:</b></td>
             <td><b>Case Title:</b></td>
             <td><b>Assigned To:</b></td>
             <td><b>Created At:</b></td>
@@ -125,6 +132,7 @@
         <table id="cases"  ng-repeat= 'thing in cases'>
           <tr>
             <td>{{cases[$index].id}}</td>
+            <td>{{cases[$index].status | capitalize}}</td>
             <td><a  ng-click="caseClick(cases[$index].id)" >{{cases[$index].title}}</a></td>
             <td>{{cases[$index].assigned_to}}</td>
             <td>{{cases[$index].last_modified}}

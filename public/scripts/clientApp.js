@@ -1,5 +1,17 @@
 var CRMLJA = angular.module('CRMLJA', []);
 
+
+CRMLJA.controller('Ctrl', function ($scope) {
+   $scope.msg = 'hello, world.';
+});
+
+CRMLJA.filter('capitalize', function() {
+    return function(input) {
+      return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
+    };
+});
+
+
   // angular.module('CRMLJA', ['ngAnimate', 'ui.bootstrap']);
   // angular.module('CRMLJA').controller('DropdownCtrl', function ($scope, $log) {
   //   $scope.items = [
@@ -26,6 +38,12 @@ var CRMLJA = angular.module('CRMLJA', []);
   // });
 
 CRMLJA.controller('contentArea', ['$scope', '$http', '$window', function($scope, $http, $window){
+
+
+
+
+
+
 
       $scope.angularWorks = function(){
         console.log('angular works');

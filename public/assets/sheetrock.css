@@ -44,21 +44,34 @@ table#cases  {
     width:700px;
     border:solid 2px;
     display:inline;
+    table-layout: fixed;
+
   }
 
 table#cases  td {
     width:100px;
+    table-layout: fixed;
+
   }
 
 
 table#cases  {
       width:500px;
       border:solid 2px;
+      table-layout: fixed;
     }
 
-table#cases  td {
-      width:100px;
-    }
+  table#casesNoBorder{
+    width:500px;
+  }
+  /*table#casesNoBorder  td {
+    width:100px;
+  }*/
+
+#selectDop {
+  width:250px;
+}
+
 
 table#insure {
   /*display:inline-block;*/
