@@ -50,9 +50,8 @@
           <tr>
             <td><b>Case ID:</b> {{caseMeta.id}}</td>
               <td><b>Case Status:</b>
-                <select ng-model="caseStatus">
-                <option value="TRUE">Open</option>
-                <option value="FALSE">Closed</option>
+                <select ng-model="statusOfTheCase">
+                <option value="open">Open</option>
                 <option value="closed">Closed</option>
                 <option value="canceled">Canceled</option>
               </select>
@@ -72,6 +71,9 @@
             <td><p>{{caseMeta.summary}}</p></td>
           </tr>
         </table>
+        <br>
+        <button type="submit" ng-click="caseStatus()">Save Case</button>
+
       </div>
     <div class="col-md-6">
       <h4>Case Notes:</h4>
@@ -82,6 +84,7 @@
           <td>{{casenotes[$index].author}}</td>
           <td>{{casenotes[$index].timestamp}}</td>
         </tr>
+
       </table>
     </div>
   </div>

@@ -136,7 +136,6 @@ CRMLJA.controller('searchPage', ['$scope', '$http', '$window', function($scope, 
         $scope.nextPage = function(){
           console.log('made it to next page');
           $window.location.href = '/360';
-
         };
 
         $scope.searchClient = function(){
@@ -182,6 +181,7 @@ CRMLJA.controller('cases', ['$scope', '$http', '$window', function($scope, $http
             console.log("Now, for case meta information we are receiving...");
             $scope.caseMeta = response.data[0];
             console.log($scope.caseMeta);
+            $scope.statusOfTheCase=  $scope.caseMeta.status;
           });
 
           $http({
@@ -214,6 +214,28 @@ CRMLJA.controller('cases', ['$scope', '$http', '$window', function($scope, $http
               });
       };
         $scope.getCases();
+
+        $scope.caseStatus = function(){
+          console.log('hit on case status received');
+          $scope.caseMeta.status = $scope.statusOfTheCase;
+          var caseStatusSend = {
+            status: $scope.caseMeta.status
+          };
+
+          $http({
+            method: 'POST',
+            url: '/caseStatusUpdate',
+            data: caseStatusSend
+          }).then(function(){
+            $window.location.href = '/360';
+
+          });
+
+        };
+
+
+
+
 }]);
 
 
