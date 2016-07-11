@@ -343,6 +343,10 @@ app.post('/addInsurer', function(req, res){
 
 
 
+app.get('/insureAdd', function(req, res){
+  res.sendFile(path.resolve('views/insurerAdd.html'));
+});
+
 app.get('/search', function(req, res){
   res.sendFile(path.resolve('views/search.html'));
 });

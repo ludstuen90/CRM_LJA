@@ -460,10 +460,42 @@ $scope.saveInsure= function(){
       data: $scope.specificInsure[0]
     }).then(function(){
       $window.location.href = '/360';
-
     });
 });
 };
+
+
+
+$scope.addInsurance = function(){
+  $http({
+    method: 'POST',
+    url: '/addInsurer',
+    data: $scope.specificInsure[0]
+  }).then(function(){
+    $window.location.href = '/360';
+  });
+
+};
+
+$scope.deleteInsure = function() {
+  console.log('we have made it to delete insure');
+  if (confirm("Are you sure you want to delete this record? This action can NOT be undone.")){
+    if ('yes' === prompt("If you still want to delete, type 'yes' into the box below. Hint: No quotes needed.")){
+      alert("Provider has been deleted.");
+      $http({
+        method:'GET',
+        url: '/removeInsurer'
+      }).then(function(){
+        $window.location.href = '/360';
+      });
+    } else{
+      alert("Sorry, record not deleted. Either your text input didn't match 'yes', or you cancelled the transaction.");
+    }
+  } else {
+  }
+};
+
+
 
   $scope.initial();
 
