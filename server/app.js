@@ -116,9 +116,9 @@ app.get('/getCases', function(req, res){
   console.log("Get case request received!");
   resultsCase = [];
   pg.connect(connectionString, function(err, client, done){
-    var searchCases = ('SELECT * FROM cases_meta WHERE client_id=' + global.clientId);
+    var searchCases = ("SELECT * FROM cases_meta WHERE client_id=" + global.clientId +" AND status='open'");
     console.log("we are sending over the query");
-    console.log('SELECT * FROM cases_meta WHERE client_id=' + global.clientId);
+    console.log("SELECT * FROM cases_meta WHERE client_id=" + global.clientId +" AND status='open'");
     var query = client.query(searchCases);
     query.on('row', function(row){
       resultsCase.push(row);

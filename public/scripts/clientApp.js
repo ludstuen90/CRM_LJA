@@ -39,12 +39,6 @@ CRMLJA.filter('capitalize', function() {
 
 CRMLJA.controller('contentArea', ['$scope', '$http', '$window', function($scope, $http, $window){
 
-
-
-
-
-
-
       $scope.angularWorks = function(){
         console.log('angular works');
       };
@@ -95,6 +89,7 @@ $scope.updateClient = function(){
 };
 
 $scope.getClients = function(){
+  $scope.selectDop = 'open';
         console.log("get clients was called!");
         $http({
           method: 'GET',
