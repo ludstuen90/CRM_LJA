@@ -49,7 +49,14 @@
           </tr>
           <tr>
             <td><b>Case ID:</b> {{caseMeta.id}}</td>
-              <td></td>
+              <td><b>Case Status:</b>
+                <select ng-model="caseStatus">
+                <option value="TRUE">Open</option>
+                <option value="FALSE">Closed</option>
+                <option value="closed">Closed</option>
+                <option value="canceled">Canceled</option>
+              </select>
+              </td>
           </tr>
         </p></table>
       </div>
