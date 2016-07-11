@@ -145,3 +145,12 @@ table#maintenanceItems {
 #createNoteTitle{
 width:450px;
 }
+
+#insureNotesBox{
+  width:400px;
+  height:200px;
+}
+
+#insureField{
+width:100%;
+}

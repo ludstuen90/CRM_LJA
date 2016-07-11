@@ -48,8 +48,8 @@
             </td>
           </tr>
           <tr>
-            <td>Claim Number: {{client.claim_num}}</td>
             <td>Client ID: {{client.id}}</td>
+            <td></td>
           </tr>
         </p></table>
       </div>
@@ -77,13 +77,16 @@
     <div class="row">
 
       <div class="col-md-6">
-            <p><b>Provider/Carrier Information: </p></b>
+            <p><b>Provider/Carrier Information:  </p></b>
             <table id="info" ng-repeat = 'person in insurer'>
               <tr>
-                <td><b>Agency</b> {{insurer[$index].provider}}</td>
+                <td><b>Agency</b> {{insurer[$index].provider}}    <a ng-click="insurerEdit(insurer[$index].id)"><img src="assets/pencil.png" width="16px"></a></td>
               </tr>
               <tr>
-                <td><b>Provider Type</b> {{insurer[$index].provider_type}}
+                <td><b>Provider Type</b> {{insurer[$index].provider_type}}</td>
+              </tr>
+              <tr>
+                <td><b>Claim Number:</b> {{insurer[$index].claim_number}}</td>
               </tr>
               <tr>
                 <td><b>Contact Name:</b> {{insurer[$index].first_name}} {{insurer[$index].last_name}}</td>
@@ -96,6 +99,7 @@
               </tr>
               <tr>
                 <td><b>Special notes:</b> {{insurer[$index].notes}}</td>
+              </tr>
               <tr>
                 <td>...</td>
               </tr>

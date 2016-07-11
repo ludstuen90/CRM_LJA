@@ -8,6 +8,7 @@ app.use( bodyParser.json() );
 global.clientId=0;
 global.caseId=0;
 global.noteId=0;
+global.insureId=0;
 
 
 //include Database
@@ -211,6 +212,71 @@ app.post('/newCase', function(req, res){
   res.sendStatus(200);
 });
 
+
+
+app.post('/sendInsure', function(req, res){
+  console.log('hit received at sendInsure, with insure ID of', req.body.insureId);
+  global.insureId= req.body.insureId;
+  res.sendStatus(200);
+});
+
+app.get('/getInsureId', function(req, res){
+  console.log('request received at getInsureId');
+  return res.json(global.insureId);
+});
+
+app.get('/specificInsure', function(req, res){
+//  var searchCaseMeta = ('SELECT * FROM cases_meta WHERE id=' + global.caseId);
+console.log('request received at specific insure');
+resultsSpecInsure = [];
+pg.connect(connectionString, function(err, client, done){
+  // if(err){
+  //   console.log(err);
+  // }
+  // else
+    var specificInsuranceQuery = ('SELECT * FROM insurers WHERE id='+global.insureId);
+    console.log('we are sending over the query');
+    console.log('SELECT * FROM insurers WHERE id='+global.insureId);
+    var query = client.query(specificInsuranceQuery);
+    query.on('row', function(row){
+      resultsSpecInsure.push(row);
+    });
+    query.on('end', function(){
+      done();
+      console.log('and the results from specific insure will be', resultsSpecInsure);
+      return res.json(resultsSpecInsure);
+    });
+
+});
+});
+
+//
+//
+//
+// app.get('/getCases', function(req, res){
+//   console.log("Get case request received!");
+//   resultsCase = [];
+//   pg.connect(connectionString, function(err, client, done){
+//     var searchCases = ('SELECT * FROM cases_meta WHERE client_id=' + global.clientId);
+//     console.log("we are sending over the query");
+//     console.log('SELECT * FROM cases_meta WHERE client_id=' + global.clientId);
+//     var query = client.query(searchCases);
+//     query.on('row', function(row){
+//       resultsCase.push(row);
+//     });
+//     query.on('end', function(){
+//       done();
+//       console.log(resultsCase);
+//       return res.json(resultsCase);
+//     });
+//     if(err){
+//       console.log(err);
+//     }
+//   });
+// });
+
+
+
 app.get('/getLastVal', function(req, res){console.log("Get case request received!");
 getVal = [];
 pg.connect(connectionString, function(err, client, done){
@@ -250,12 +316,8 @@ pg.connect(connectionString, function(err, client, done){
   client.query('INSERT INTO cases_notes (case_id, title, note, author) VALUES ($1, $2, $3, $4)', [global.caseId, req.body.noteTitle, req.body.noteContents, req.body.noteAuthor ]);
 });
 
-//
-//   pg.connect(connectionString, function(err, client, done){
-//     client.query ('INSERT INTO cases_meta (created_by, assigned_to, claim_no, summary, client_id, open, title) VALUES ($1, $2, $3, $4, $5, $6, $7)', [req.body.author, req.body.assigned, req.body.claimNo, req.body.resumen, global.clientId, 'true', req.body.title ]);
-//     done();
-//   });
-  res.sendStatus(200);
+
+
 
 });
 
@@ -284,6 +346,10 @@ app.get('/caseCreate', function(req, res){
 
 app.get('/caseAddNote', function(req, res){
   res.sendFile(path.resolve('views/caseAddNote.html'));
+});
+
+app.get('/insureEdit', function(req, res){
+  res.sendFile(path.resolve('views/insureEdit.html'));
 });
 
 //Assign Static Folder

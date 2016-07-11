@@ -107,10 +107,20 @@ $scope.getClients = function(){
         });
 };
 
+$scope.insurerEdit = function(indexParam){
+  console.log("Insureredit click received with param of ", indexParam);
+insurerEdit = {
+  insureId: indexParam
+};
 
-
-
-
+  $http({
+    method: 'POST',
+    url: '/sendInsure',
+    data: insurerEdit
+  }).then(function(){
+    $window.location.href= '/insureEdit';
+  });
+};
 
 
 $scope.getClients();
@@ -361,6 +371,16 @@ CRMLJA.controller('addNote', ['$scope', '$http', '$window', function($scope, $ht
       $scope.initial();
 
 
+
+      $http({
+        method: 'GET',
+        url: '/caseMet',
+      }).then(function(response){
+        console.log("Now, for case meta information we are receiving...");
+        $scope.caseMeta = response.data[0];
+        console.log($scope.caseMeta);
+      });
+
       $scope.noteSubmit= function(){
         var newNote = {
           noteTitle: $scope.createNoteTitle,
@@ -380,6 +400,52 @@ CRMLJA.controller('addNote', ['$scope', '$http', '$window', function($scope, $ht
         console.log('note title is ', $scope.createNoteTitle, 'the author is ', $scope.createNoteAuthor, ' and the body is ', $scope.addedNote);
 
       };
+}]);
 
+
+CRMLJA.controller('insureEdit', ['$scope', '$http', '$window', function($scope, $http, $window){
+$scope.thisInsurer = 0;
+$scope.specificInsure= '';
+
+$scope.receiveInsurerInfo = function(){
+  console.log('received request at specificInsure');
+  $http({
+    method: 'GET',
+    url: '/specificInsure',
+  }).then(function(response){
+    console.log(response);
+    $scope.specificInsure = response.data;
+    console.log($scope.specificInsure);
+    console.log($scope.specificInsure[0]);
+  });
+
+};
+
+
+$scope.getInsureId = function(){
+  $http({
+    method: 'GET',
+    url: '/getInsureId'
+  }).then(function(response){
+    console.log('Insure ID is ' , response.data);
+    $scope.thisInsurer = response.data;
+    $scope.receiveInsurerInfo();
+  });
+};
+
+  $scope.initial = function(){
+    $http({
+      method: 'GET',
+      url: '/getClient',
+    }).then(function(response){
+      $scope.client = response.data[0];
+    console.log("Client info is...");
+      console.log($scope.client);
+      $scope.getInsureId();
+    });
+  };
+
+
+  $scope.initial();
 
 }]);
