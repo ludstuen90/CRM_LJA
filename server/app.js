@@ -314,12 +314,31 @@ app.post('/newCaseNote', function(req, res){
 
 pg.connect(connectionString, function(err, client, done){
   client.query('INSERT INTO cases_notes (case_id, title, note, author) VALUES ($1, $2, $3, $4)', [global.caseId, req.body.noteTitle, req.body.noteContents, req.body.noteAuthor ]);
+  done();
+});
 });
 
+app.get('/removeInsurer', function(req, res){
+  console.log('Request received in removeInsurer');
+  pg.connect(connectionString, function(err, client, done){
+    client.query('DELETE FROM insurers WHERE id=' + global.insureId);
+    done();
+  });
+  res.sendStatus(200);
+});
 
+app.post('/addInsurer', function(req, res){
+  console.log('Request received in add Insurer');
+  console.log(req.body.id, req.body.provider, req.body.first_name, req.body.last_name, req.body.phone, req.body.email, req.body.client_id, req.body.provider_type, req.body.notes, req.body.claim_number);
 
+  pg.connect(connectionString, function(err, client, done){
+    client.query ('INSERT INTO insurers (provider, first_name, last_name, phone, email, client_id, provider_type, notes, claim_number) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)', [req.body.provider, req.body.first_name, req.body.last_name, req.body.phone, req.body.email, global.clientId, req.body.provider_type, req.body.notes, req.body.claim_number]);
+    done();
+  });
+  res.sendStatus(200);
 
 });
+
 
 
 

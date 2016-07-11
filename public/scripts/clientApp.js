@@ -407,6 +407,9 @@ CRMLJA.controller('insureEdit', ['$scope', '$http', '$window', function($scope, 
 $scope.thisInsurer = 0;
 $scope.specificInsure= '';
 
+
+
+
 $scope.receiveInsurerInfo = function(){
   console.log('received request at specificInsure');
   $http({
@@ -418,10 +421,7 @@ $scope.receiveInsurerInfo = function(){
     console.log($scope.specificInsure);
     console.log($scope.specificInsure[0]);
   });
-
 };
-
-
 $scope.getInsureId = function(){
   $http({
     method: 'GET',
@@ -445,6 +445,25 @@ $scope.getInsureId = function(){
     });
   };
 
+$scope.saveInsure= function(){
+  $scope.specificInsure = $scope.specificInsure;
+  console.log($scope.specificInsure );
+  console.log($scope.specificInsure[0].first_name);
+
+  $http({
+    method: 'GET',
+    url: '/removeInsurer'
+  }).then(function(){
+    $http({
+      method: 'POST',
+      url: '/addInsurer',
+      data: $scope.specificInsure[0]
+    }).then(function(){
+      $window.location.href = '/360';
+
+    });
+});
+};
 
   $scope.initial();
 

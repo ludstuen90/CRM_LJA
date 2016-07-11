@@ -32,29 +32,30 @@
             <li><a href="/360">Client 360 Page</a></li>
             <li class="active"><a href="/insureEdit">Edit Insurer</a></li>
           </ul>
-        <p><b>Provider Information</b></p>
-
+          <br>
+        <h4><b>Provider Information</b></h4>
+        <br>
         <table>
           <tr>
-            <td><b>Provider Information:</b></td><td width="300px"><input id="insureField" type="text" value="{{specificInsure[0].provider}}"/></td>
+            <td><b>Provider Information:</b></td><td width="300px"><input id="insureField" type="text" ng-model="specificInsure[0].provider"/></td>
           </tr>
           <tr>
-            <td><b>Provider Type:</b> </td><td><input id="insureField" type="text" value="{{specificInsure[0].provider_type}}"/></td>
+            <td><b>Provider Type:</b> </td><td><input id="insureField" type="text" ng-model="specificInsure[0].provider_type" /></td>
           </tr>
           <tr>
-            <td><b>Clain Number:</b> </td><td><input id="insureField" type="text" value="{{specificInsure[0].claim_number}}"/></td>
+            <td><b>Clain Number:</b> </td><td><input id="insureField" type="text" ng-model="specificInsure[0].claim_number"/></td>
           </tr>
           <tr>
-            <td><b>Contact First Name:</b></td><td> <input id="insureField" type="text" value="{{specificInsure[0].first_name}}"/></td>
+            <td><b>Contact First Name:</b></td><td> <input id="insureField" type="text" ng-model="specificInsure[0].first_name"/></td>
           </tr>
           <tr>
-            <td><b>Contact Last Name:</b></td><td><input id="insureField" type="text" value="{{specificInsure[0].last_name}}"/></td>
+            <td><b>Contact Last Name:</b></td><td><input id="insureField" type="text" ng-model="specificInsure[0].last_name"/></td>
           </tr>
           <tr>
-            <td><b>Phone:</b></td><td><input type="text" id="insureField" value="{{specificInsure[0].phone}}"/></td>
+            <td><b>Phone:</b></td><td><input type="text" id="insureField" ng-model="specificInsure[0].phone"/></td>
           </tr>
           <tr>
-            <td><b>Email:</b></td><td> <input type="text" id="insureField" value="{{specificInsure[0].email}}"/></td>
+            <td><b>Email:</b></td><td> <input type="text" id="insureField" ng-model="specificInsure[0].email"/></td>
           </tr>
 
     </table>
@@ -63,8 +64,7 @@
 
 <br>
 <b>Notes:</b>
-<textarea id="insureNotesBox">
-  {{specificInsure[0].notes}}
+<textarea ng-model="specificInsure[0].notes" id="insureNotesBox">
 </textarea>
 
 
