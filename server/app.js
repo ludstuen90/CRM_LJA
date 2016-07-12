@@ -352,6 +352,78 @@ app.post('/caseStatusUpdate', function(req, res){
 });
 
 
+app.get('/getClosedCases', function(req, res){
+  console.log('request received to get closed cases');
+  resultsCase = [];
+  pg.connect(connectionString, function(err, client, done){
+    var searchCases = ("SELECT * FROM cases_meta WHERE client_id=" + global.clientId +" AND status='closed'");
+    console.log("we are sending over the query");
+    console.log("SELECT * FROM cases_meta WHERE client_id=" + global.clientId +" AND status='closed'");
+    var query = client.query(searchCases);
+    query.on('row', function(row){
+      resultsCase.push(row);
+    });
+    query.on('end', function(){
+      done();
+      console.log(resultsCase);
+      return res.json(resultsCase);
+    });
+    if(err){
+      console.log(err);
+    }
+  });
+});
+
+
+
+app.get('/getOpenCases', function(req, res){
+  console.log('request received to get open cases');
+  resultsCase = [];
+  pg.connect(connectionString, function(err, client, done){
+    var searchCases = ("SELECT * FROM cases_meta WHERE client_id=" + global.clientId +" AND status='open'");
+    console.log("we are sending over the query");
+    console.log("SELECT * FROM cases_meta WHERE client_id=" + global.clientId +" AND status='open'");
+    var query = client.query(searchCases);
+    query.on('row', function(row){
+      resultsCase.push(row);
+    });
+    query.on('end', function(){
+      done();
+      console.log(resultsCase);
+      return res.json(resultsCase);
+    });
+    if(err){
+      console.log(err);
+    }
+  });
+});
+
+
+
+
+app.get('/getCanceledCases', function(req, res){
+  console.log('request received to get canceled cases');
+  resultsCase = [];
+  pg.connect(connectionString, function(err, client, done){
+    var searchCases = ("SELECT * FROM cases_meta WHERE client_id=" + global.clientId +" AND status='canceled'");
+    console.log("we are sending over the query");
+    console.log("SELECT * FROM cases_meta WHERE client_id=" + global.clientId +" AND status='canceled'");
+    var query = client.query(searchCases);
+    query.on('row', function(row){
+      resultsCase.push(row);
+    });
+    query.on('end', function(){
+      done();
+      console.log(resultsCase);
+      return res.json(resultsCase);
+    });
+    if(err){
+      console.log(err);
+    }
+  });
+});
+
+
 
 
 

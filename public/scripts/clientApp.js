@@ -89,7 +89,7 @@ $scope.updateClient = function(){
 };
 
 $scope.getClients = function(){
-  $scope.selectDop = 'open';
+    $scope.statusOfTheCase = 'open';
         console.log("get clients was called!");
         $http({
           method: 'GET',
@@ -137,6 +137,39 @@ insurerEdit = {
 
 
 $scope.getClients();
+
+$scope.updateCaseDisplay = function(){
+  console.log($scope.statusOfTheCase);
+  if(($scope.statusOfTheCase)=='closed'){
+    $http({
+      method: 'GET',
+      url: '/getClosedCases',
+    }).then(function(response){
+  console.log(response.data);
+  $scope.cases = response.data;
+});
+  } else if (($scope.statusOfTheCase)== 'open'){
+    $http({
+      method: 'GET',
+      url: '/getOpenCases'
+    }).then(function(response){
+      console.log(response.data);
+      $scope.cases = response.data;
+    });
+    console.log('cats!');
+  } else {
+    $http({
+      method: 'GET',
+      url: '/getCanceledCases'
+    }).then(function(response){
+      console.log(response.data);
+      $scope.cases = response.data;
+
+    });
+  }
+};
+
+
 
 }]);
 
