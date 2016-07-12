@@ -1,7 +1,7 @@
 var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
-var urlencodedParser=bodyParser.urlencoded({extended:false});
+var urlencodedParser=bodyParser.urlencoded({extended:true});
 var app=express();
 app.use( bodyParser.json() );
 
@@ -22,6 +22,36 @@ app.listen(3000, 'localhost', function(req, res){
 });
 
 
+// ################################# BELOW ADDED FOR LOG IN
+
+
+var passport = require('../strategies/user_sql.js');
+var session = require('express-session');
+
+// Route includes
+var index = require('../routes/index');
+var user = require('../routes/user');
+var register = require('../routes/register');
+
+
+app.use(session({
+   secret: 'secret',
+   key: 'user',
+   resave: 'true',
+   saveUninitialized: false,
+   cookie: {maxage: 60000, secure: false}
+}));
+
+// start up passport sessions
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Routes
+app.use('/register', register);
+app.use('/user', user);
+app.use('/*', index);
+
+// ################################# ABOVE ADDED FOR LOGIN
 app.get('/', function(req, res){
   console.log("Home page hit received");
   console.log("our global variable is now ", global.clientId);
@@ -432,14 +462,6 @@ app.post('/updateClientInfos', function(req, res){
     client.query("UPDATE clients SET first_name='"+ req.body.first_name + "',  last_name='"+ req.body.last_name + "', address='"+ req.body.address + "', city='" + req.body.city + "', state='" + req.body.state + "', email='" + req.body.email+ "', phone='" + req.body.phone + "', address2='" + req.body.address2 + "'  WHERE id=" + req.body.id);
     done();
   });
-  // console.log("request received to update status of case");
-  // console.log("UPDATE cases_meta SET status='" + req.body.status + "' WHERE id='"+ global.caseId+"'");
-  //
-  // pg.connect(connectionString, function(err, client, done){
-  //   client.query("UPDATE cases_meta SET status='" + req.body.status + "' WHERE id='"+ global.caseId+"'");
-  //   done();
-  // });
-  // res.sendStatus(200);
 
   res.sendStatus(200);
 });

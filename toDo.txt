@@ -4,8 +4,3 @@ Make so case note loads automatically
 
 
 case ID doesn’t update when saving
-
-FRONT PAGE WORK:
-Now, only open cases will load. Update the drop-down with cases so that it also begins as "OPEN"
-Then, you'll need to add so that when you change dropdown selection, and press 'reload' (and add button),
-only cases of THAT TYPE will load. For example, 'canceled', or 'closed'.

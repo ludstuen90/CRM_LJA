@@ -1,28 +1,41 @@
 <!DOCTYPE html>
 <html ng-app="CRMLJA">
   <head>
-    <meta charset="utf-8">
-    <title>Client 360 Page</title>
     <script type="text/javascript" src="vendors/angular.min.js"></script>
     <script type="text/javascript" src="scripts/clientApp.js"></script>
     <link rel="stylesheet" href="vendors/bootstrap.min.css"></link>
     <link rel="stylesheet" href="assets/sheetrock.css"></link>
+    <meta charset="utf-8">
+    <title></title>
   </head>
   <body>
-    <div ng-include="'partials/navbar.html'"></div>
 
-    <div ng-controller="searchPage">
-      <div class="row">
-        <div class="container">
-          <div class="col-md-12">
-            <h1>Welcome Home. Coffee's brewing</h1>
-            <h2>Client Search</h2>
-            <input type="text" ng-model="clientId" placeholder="Enter a client ID"></input>
-            <button type="submit" ng-click="searchClient()">Submit</button>
-          </div>
-        </div>
-      </div>
+    <div id="header">
+      <h2><a href="/360">Legal Justice Alliance</a></h2>
     </div>
+    <h1>Login </h1>
+    <div class="instructions">
+                <div class="container">
+                    <h1 class="lead">Passport Login SQL</h1>
+                </div>
+            </div>
+            <div class="container">
+                <!-- Set form action and method -->
+                <form action="/" method="post">
+                    <div>
+                        <label for="username">Username:</label>
+                        <input type="text" name="username" id="username"/>
+                    </div>
+                    <div>
+                        <label for="password">Password:</label>
+                        <input type="password" name="password" id="password"/>
+                    </div>
+                    <div>
+                        <input type="submit" value="Log In"/>
+                        <a href="/register">Register</a>
+                    </div>
+                </form>
+            </div>
 
-</body>
+  </body>
 </html>
