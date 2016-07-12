@@ -424,8 +424,31 @@ app.get('/getCanceledCases', function(req, res){
 });
 
 
+app.post('/updateClientInfos', function(req, res){
+  console.log("Made it to Client Info Update");
+  console.log(req.body.first_name);
+
+  pg.connect(connectionString, function(err, client, done){
+    client.query("UPDATE clients SET first_name='"+ req.body.first_name + "',  last_name='"+ req.body.last_name + "', address='"+ req.body.address + "', city='" + req.body.city + "', state='" + req.body.state + "', email='" + req.body.email+ "', phone='" + req.body.phone + "', address2='" + req.body.address2 + "'  WHERE id=" + req.body.id);
+    done();
+  });
+  // console.log("request received to update status of case");
+  // console.log("UPDATE cases_meta SET status='" + req.body.status + "' WHERE id='"+ global.caseId+"'");
+  //
+  // pg.connect(connectionString, function(err, client, done){
+  //   client.query("UPDATE cases_meta SET status='" + req.body.status + "' WHERE id='"+ global.caseId+"'");
+  //   done();
+  // });
+  // res.sendStatus(200);
+
+  res.sendStatus(200);
+});
 
 
+
+app.get('/editClientInfo', function(req, res){
+  res.sendFile(path.resolve('views/editClientInfo.html'));
+});
 
 app.get('/insureAdd', function(req, res){
   res.sendFile(path.resolve('views/insurerAdd.html'));

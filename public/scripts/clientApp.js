@@ -11,33 +11,12 @@ CRMLJA.filter('capitalize', function() {
     };
 });
 
-
-  // angular.module('CRMLJA', ['ngAnimate', 'ui.bootstrap']);
-  // angular.module('CRMLJA').controller('DropdownCtrl', function ($scope, $log) {
-  //   $scope.items = [
-  //     'The first choice!',
-  //     'And another choice for you.',
-  //     'but wait! A third!'
-  //   ];
-  //
-  //   $scope.status = {
-  //     isopen: false
-  //   };
-  //
-  //   $scope.toggled = function(open) {
-  //     $log.log('Dropdown is now: ', open);
-  //   };
-  //
-  //   $scope.toggleDropdown = function($event) {
-  //     $event.preventDefault();
-  //     $event.stopPropagation();
-  //     $scope.status.isopen = !$scope.status.isopen;
-  //   };
-  //
-  //   $scope.appendToEl = angular.element(document.querySelector('#dropdown-long-content'));
-  // });
-
 CRMLJA.controller('contentArea', ['$scope', '$http', '$window', function($scope, $http, $window){
+
+$scope.editClientInfo = function(){
+  $window.location.href = '/editClientInfo';
+};
+
 
       $scope.angularWorks = function(){
         console.log('angular works');
@@ -60,8 +39,6 @@ CRMLJA.controller('contentArea', ['$scope', '$http', '$window', function($scope,
           $scope.toCase();
 
         });
-
-
       $scope.toCase = function(){
         $window.location.href = '/case';
       };
@@ -514,7 +491,6 @@ $scope.getInsureId = function(){
   };
 
 $scope.saveInsure= function(){
-  $scope.specificInsure = $scope.specificInsure;
   console.log($scope.specificInsure );
   console.log($scope.specificInsure[0].first_name);
 
@@ -562,9 +538,37 @@ $scope.deleteInsure = function() {
   } else {
   }
 };
-
-
-
   $scope.initial();
+}]);
 
+
+
+CRMLJA.controller('clientEdit', ['$scope', '$http', '$window', function($scope, $http, $window){
+$scope.initCaseEdit = function(){
+       $http({
+          method: 'GET',
+          url: '/getClient',
+        }).then(function(response){
+          console.log("client response is...");
+          console.log(response);
+          $scope.client = response.data[0];
+          console.log($scope.client);
+        });
+      };
+$scope.initCaseEdit();
+
+$scope.saveClientEdit = function(){
+  console.log('hit at client edit received');
+  var objectToSend = $scope.client;
+  console.log(objectToSend);
+  $http({
+    method: 'POST',
+    url: '/updateClientInfos',
+    data: objectToSend
+  }).then(function(){
+    console.log('success');
+    $window.location.href = '/360';
+
+  });
+};
 }]);

@@ -21,7 +21,7 @@
       <!-- <h4>Client ID Number:</h4>
       <input type="text" ng-model="idIn"></input>
       <button type="submit" ng-click="updateClient()">Submit</button> -->
-        <p><b>Client Information</b></p>
+        <p><b>Client Information<a ng-click="editClientInfo()"><img src="assets/pencil.png" width="16px"></a></b></p>
         <table width="100%"><p>
           <tr>
             <td>
@@ -138,7 +138,7 @@
             <td>{{cases[$index].last_modified}}
           </tr>
         </table>
-      
+
         <button type="submit" ng-click="updateCaseDisplay()">Update Case Display</button>
         </div>
         </div>
