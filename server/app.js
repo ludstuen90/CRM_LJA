@@ -1,7 +1,7 @@
 var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
-var urlencodedParser=bodyParser.urlencoded({extended:true});
+var urlencodedParser=bodyParser.urlencoded({extended:false});
 var app=express();
 app.use( bodyParser.json() );
 
@@ -33,7 +33,6 @@ var index = require('../routes/index');
 var user = require('../routes/user');
 var register = require('../routes/register');
 
-
 app.use(session({
    secret: 'secret',
    key: 'user',
@@ -46,10 +45,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Routes
-app.use('/register', register);
-app.use('/user', user);
-app.use('/*', index);
 
 // ################################# ABOVE ADDED FOR LOGIN
 app.get('/', function(req, res){
@@ -506,3 +501,13 @@ app.get('/insureEdit', function(req, res){
 
 //Assign Static Folder
 app.use( express.static('public'));
+
+
+
+//// BELOW ADDED FOR LOGIN
+// Routes
+app.use('/register', register);
+app.use('/user', user);
+app.use('/*', index);
+
+///
