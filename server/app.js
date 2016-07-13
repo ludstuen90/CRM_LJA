@@ -10,7 +10,6 @@ global.caseId=0;
 global.noteId=0;
 global.insureId=0;
 
-
 //include Database
 
 var pg = require('pg');
@@ -23,8 +22,6 @@ app.listen(3000, 'localhost', function(req, res){
 
 
 // ################################# BELOW ADDED FOR LOG IN
-
-
 var passport = require('../strategies/user_sql.js');
 var session = require('express-session');
 
@@ -44,14 +41,15 @@ app.use(session({
 // start up passport sessions
 app.use(passport.initialize());
 app.use(passport.session());
-
-
 // ################################# ABOVE ADDED FOR LOGIN
-app.get('/', function(req, res){
-  console.log("Home page hit received");
-  console.log("our global variable is now ", global.clientId);
-  res.sendFile(path.resolve('views/index.html'));
-});
+
+// app.get('/', function(req, res){
+//   console.log("Home page hit received");
+//   console.log("our global variable is now ", global.clientId);
+//   res.sendFile(path.resolve('views/index.html'));
+// });
+
+
 
 app.get('/getInsurer', function(req, res){
   console.log("Get insurer request received!");
@@ -83,7 +81,6 @@ app.get('/360View', function(req, res){
   res.sendFile(path.resolve('views/index.html'));
 });
 
-
 app.post('/getInfo', function(req, res){
   console.log("Get client request received!");
   var client = {
@@ -94,27 +91,24 @@ app.post('/getInfo', function(req, res){
 
   console.log("global.clientId is now ", global.clientId);
 
-console.log("We are about to search for client ", client.id);
-var search =('SELECT * FROM clients WHERE id=' + client.id );
-search.toString();
-  results = [];
-  pg.connect(connectionString, function(err, client, done){
-    var query = client.query(search );
-    query.on('row', function(row){
-      results.push(row);
-    });
-    query.on('end', function(){
-      done();
-      return res.json(results);
-    });
-    if(err){
-      console.log(err);
-    }
-    });
+    console.log("We are about to search for client ", client.id);
+    var search =('SELECT * FROM clients WHERE id=' + client.id );
+    search.toString();
+      results = [];
+      pg.connect(connectionString, function(err, client, done){
+        var query = client.query(search );
+        query.on('row', function(row){
+          results.push(row);
+        });
+        query.on('end', function(){
+          done();
+          return res.json(results);
+        });
+        if(err){
+          console.log(err);
+        }
+        });
 });
-
-
-
 
 app.get('/getClient', function(req, res){
   console.log("Get client request received!");
@@ -135,7 +129,6 @@ app.get('/getClient', function(req, res){
     });
 
 });
-
 
 app.get('/getCases', function(req, res){
   console.log("Get case request received!");
@@ -158,7 +151,6 @@ app.get('/getCases', function(req, res){
     }
   });
 });
-
 
 app.get('/caseDet', function(req, res){
   console.log("Get case request received!");
@@ -183,8 +175,6 @@ app.get('/caseDet', function(req, res){
   });
 });
 
-
-
 app.get('/caseMet', function(req, res){
   console.log("Get case request received!");
   resultsCaseMet = [];
@@ -208,12 +198,9 @@ app.get('/caseMet', function(req, res){
   });
 });
 
-
-
 app.get('/noteSee', function(req, res){
-return res.json(global.noteId);
+  return res.json(global.noteId);
 });
-
 
 app.post('/noteView', function(req, res){
   console.log("Received a note view request of", req.body.view);
@@ -221,7 +208,6 @@ app.post('/noteView', function(req, res){
   console.log('note global variable is now ', global.noteId);
   res.sendStatus(200);
 });
-
 
 app.post('/newCase', function(req, res){
   console.log('received a case create request');
@@ -237,8 +223,6 @@ app.post('/newCase', function(req, res){
   res.sendStatus(200);
 });
 
-
-
 app.post('/sendInsure', function(req, res){
   console.log('hit received at sendInsure, with insure ID of', req.body.insureId);
   global.insureId= req.body.insureId;
@@ -251,80 +235,53 @@ app.get('/getInsureId', function(req, res){
 });
 
 app.get('/specificInsure', function(req, res){
-//  var searchCaseMeta = ('SELECT * FROM cases_meta WHERE id=' + global.caseId);
-console.log('request received at specific insure');
-resultsSpecInsure = [];
-pg.connect(connectionString, function(err, client, done){
-  // if(err){
-  //   console.log(err);
-  // }
-  // else
-    var specificInsuranceQuery = ('SELECT * FROM insurers WHERE id='+global.insureId);
-    console.log('we are sending over the query');
-    console.log('SELECT * FROM insurers WHERE id='+global.insureId);
-    var query = client.query(specificInsuranceQuery);
-    query.on('row', function(row){
-      resultsSpecInsure.push(row);
+  //  var searchCaseMeta = ('SELECT * FROM cases_meta WHERE id=' + global.caseId);
+  console.log('request received at specific insure');
+  resultsSpecInsure = [];
+  pg.connect(connectionString, function(err, client, done){
+    // if(err){
+    //   console.log(err);
+    // }
+    // else
+      var specificInsuranceQuery = ('SELECT * FROM insurers WHERE id='+global.insureId);
+      console.log('we are sending over the query');
+      console.log('SELECT * FROM insurers WHERE id='+global.insureId);
+      var query = client.query(specificInsuranceQuery);
+      query.on('row', function(row){
+        resultsSpecInsure.push(row);
+      });
+      query.on('end', function(){
+        done();
+        console.log('and the results from specific insure will be', resultsSpecInsure);
+        return res.json(resultsSpecInsure);
+      });
+
     });
-    query.on('end', function(){
-      done();
-      console.log('and the results from specific insure will be', resultsSpecInsure);
-      return res.json(resultsSpecInsure);
-    });
-
 });
-});
-
-//
-//
-//
-// app.get('/getCases', function(req, res){
-//   console.log("Get case request received!");
-//   resultsCase = [];
-//   pg.connect(connectionString, function(err, client, done){
-//     var searchCases = ('SELECT * FROM cases_meta WHERE client_id=' + global.clientId);
-//     console.log("we are sending over the query");
-//     console.log('SELECT * FROM cases_meta WHERE client_id=' + global.clientId);
-//     var query = client.query(searchCases);
-//     query.on('row', function(row){
-//       resultsCase.push(row);
-//     });
-//     query.on('end', function(){
-//       done();
-//       console.log(resultsCase);
-//       return res.json(resultsCase);
-//     });
-//     if(err){
-//       console.log(err);
-//     }
-//   });
-// });
-
-
 
 app.get('/getLastVal', function(req, res){console.log("Get case request received!");
-getVal = [];
-pg.connect(connectionString, function(err, client, done){
-  if(err){
-    console.log(err);
-  }
-  else {
-    var getValQuery = ('select id from cases_meta ORDER BY id DESC limit 1');
-    console.log("we are sending over the query");
-    console.log(getValQuery);
-    var query = client.query(getValQuery);
-    query.on('row', function(row){
-      getVal.push(row);
-    });
-    query.on('end', function(){
-      done();
-      console.log('and the results for case meta information will be...');
-      console.log(getVal[0].id);
-      global.caseId = getVal[0].id;
-      return res.json(getVal);
-      });
+  getVal = [];
+  pg.connect(connectionString, function(err, client, done){
+    if(err){
+      console.log(err);
     }
-  });
+    else {
+      var getValQuery = ('select id from cases_meta ORDER BY id DESC limit 1');
+      console.log("we are sending over the query");
+      console.log(getValQuery);
+      var query = client.query(getValQuery);
+      query.on('row', function(row){
+        getVal.push(row);
+      });
+      query.on('end', function(){
+        done();
+        console.log('and the results for case meta information will be...');
+        console.log(getVal[0].id);
+        global.caseId = getVal[0].id;
+        return res.json(getVal);
+        });
+      }
+    });
 });
 
 app.post('/caseParams', function(req, res){
@@ -337,10 +294,10 @@ app.post('/caseParams', function(req, res){
 app.post('/newCaseNote', function(req, res){
   // console.log('note title is ', req.body.noteTitle , 'and the author is ', req.body.noteAuthor, ', and the body is ', req.body.noteContents);
 
-pg.connect(connectionString, function(err, client, done){
+  pg.connect(connectionString, function(err, client, done){
   client.query('INSERT INTO cases_notes (case_id, title, note, author) VALUES ($1, $2, $3, $4)', [global.caseId, req.body.noteTitle, req.body.noteContents, req.body.noteAuthor ]);
   done();
-});
+  });
 });
 
 app.get('/removeInsurer', function(req, res){
@@ -364,7 +321,6 @@ app.post('/addInsurer', function(req, res){
 
 });
 
-
 app.post('/caseStatusUpdate', function(req, res){
   console.log("request received to update status of case");
   console.log("UPDATE cases_meta SET status='" + req.body.status + "' WHERE id='"+ global.caseId+"'");
@@ -375,7 +331,6 @@ app.post('/caseStatusUpdate', function(req, res){
   });
   res.sendStatus(200);
 });
-
 
 app.get('/getClosedCases', function(req, res){
   console.log('request received to get closed cases');
@@ -399,8 +354,6 @@ app.get('/getClosedCases', function(req, res){
   });
 });
 
-
-
 app.get('/getOpenCases', function(req, res){
   console.log('request received to get open cases');
   resultsCase = [];
@@ -423,32 +376,6 @@ app.get('/getOpenCases', function(req, res){
   });
 });
 
-
-
-
-app.get('/getCanceledCases', function(req, res){
-  console.log('request received to get canceled cases');
-  resultsCase = [];
-  pg.connect(connectionString, function(err, client, done){
-    var searchCases = ("SELECT * FROM cases_meta WHERE client_id=" + global.clientId +" AND status='canceled'");
-    console.log("we are sending over the query");
-    console.log("SELECT * FROM cases_meta WHERE client_id=" + global.clientId +" AND status='canceled'");
-    var query = client.query(searchCases);
-    query.on('row', function(row){
-      resultsCase.push(row);
-    });
-    query.on('end', function(){
-      done();
-      console.log(resultsCase);
-      return res.json(resultsCase);
-    });
-    if(err){
-      console.log(err);
-    }
-  });
-});
-
-
 app.post('/updateClientInfos', function(req, res){
   console.log("Made it to Client Info Update");
   console.log(req.body.first_name);
@@ -460,8 +387,6 @@ app.post('/updateClientInfos', function(req, res){
 
   res.sendStatus(200);
 });
-
-
 
 app.get('/editClientInfo', function(req, res){
   res.sendFile(path.resolve('views/editClientInfo.html'));
@@ -502,12 +427,13 @@ app.get('/insureEdit', function(req, res){
 //Assign Static Folder
 app.use( express.static('public'));
 
-
-
 //// BELOW ADDED FOR LOGIN
+
 // Routes
 app.use('/register', register);
 app.use('/user', user);
 app.use('/*', index);
+
+// app.use('/', express.static(__dirname+ '../views/index'));
 
 ///

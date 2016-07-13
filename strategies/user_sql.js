@@ -17,7 +17,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-//TO DO SQL query
+  //TO DO SQL query
   console.log('called deserializeUser');
   pg.connect(connection, function (err, client) {
 
