@@ -16,6 +16,31 @@ global.insureId=0;
 var pg = require('pg');
 var connectionString= 'postgres://localhost:5432/LJACRM';
 
+
+// PASSPORT INFORMATION HERE
+var passport = require('./strategies/userStrategy');
+var session = require('express-session');
+
+// Route includes
+var index = require('/routes/index');
+var user = require('/routes/user');
+var register = require('./routes/register');
+
+
+app.use(session({
+   secret: 'secret',
+   key: 'user',
+   resave: 'true',
+   saveUninitialized: false,
+   cookie: { maxage: 60000, secure: false }
+}));
+
+// start up passport sessions
+app.use(passport.initialize());
+app.use(passport.session());
+
+// END PASSPORT INFORMATION
+
 //Spin up local server
 app.listen(3000, 'localhost', function(req, res){
   console.log("Server is listening on port 3000");
@@ -484,3 +509,10 @@ app.get('/insureEdit', function(req, res){
 
 //Assign Static Folder
 app.use( express.static('public'));
+
+// PASSPORT INFORMATION BELOW
+app.use('/register', register);
+app.use('/user', user);
+app.use('/*', index);
+
+// END PASSPORT INFORMATION
