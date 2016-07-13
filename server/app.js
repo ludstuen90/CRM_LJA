@@ -22,8 +22,8 @@ var passport = require('./strategies/userStrategy');
 var session = require('express-session');
 
 // Route includes
-var index = require('/routes/index');
-var user = require('/routes/user');
+var index = require('./routes/index');
+var user = require('./routes/user');
 var register = require('./routes/register');
 
 

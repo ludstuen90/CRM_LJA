@@ -1,4 +1,25 @@
-var CRMLJA = angular.module('CRMLJA', []);
+var CRMLJA = angular.module('CRMLJA', ['ngRoute']);
+
+
+
+CRMLJA.config(['$routeProvider', function($routeProvider) {
+  $routeProvider
+    .when('/home', {
+      templateUrl: '/views/home.html',
+      controller: "LoginController"
+    })
+    .when('/register', {
+      templateUrl: '/views/register.html',
+      controller: "LoginController"
+    })
+    .when('/user', {
+      templateUrl: '/views/user.html',
+      controller: "UserController"
+    })
+    .otherwise({
+      redirectTo: 'home'
+    });
+}]);
 
 
 CRMLJA.controller('Ctrl', function ($scope) {
