@@ -64,7 +64,7 @@
               <textarea ng-model="addedNote" id="addNoteField">
               </textarea>
 
-              <input ng-model="createNoteAuthor" id="createNoteAuthor" placeholder="Author" type="text",>
+              <input value={{username}} id="createNoteAuthor" placeholder="Author" readonly type="text",>
 
               <button type="submit" ng-click="noteSubmit()">Submit Note</button>
 

@@ -1,11 +1,14 @@
 var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
+var jade = require('jade');
 
 var app=express();
 app.use( bodyParser.json() );
 app.use(bodyParser.urlencoded({extended:false}));
 
+
+global.userName = '';
 global.clientId=0;
 global.caseId=0;
 global.noteId=0;
@@ -73,6 +76,8 @@ app.get('/getInsurer', function(req, res){
     });
     query1.on('end', function(){
       done();
+      pg.end();
+
       console.log(resultsIns);
       return res.json(resultsIns);
     });
@@ -113,6 +118,8 @@ app.post('/getInfo', function(req, res){
         });
         query.on('end', function(){
           done();
+          pg.end();
+
           return res.json(results);
         });
         if(err){
@@ -155,6 +162,8 @@ app.get('/getCases', function(req, res){
     query.on('end', function(){
       done();
       console.log(resultsCase);
+      pg.end();
+
       return res.json(resultsCase);
     });
     if(err){
@@ -176,6 +185,8 @@ app.get('/caseDet', function(req, res){
     });
     query.on('end', function(){
       done();
+      pg.end();
+
       console.log("And the results from case notes will be ...");
       console.log(resultsCaseNot);
       return res.json(resultsCaseNot);
@@ -199,6 +210,8 @@ app.get('/caseMet', function(req, res){
     });
     query.on('end', function(){
       done();
+      pg.end();
+
       console.log('and the results for case meta informatio will be...');
       console.log(resultsCaseMet);
       return res.json(resultsCaseMet);
@@ -228,8 +241,10 @@ app.post('/newCase', function(req, res){
   console.log('summary', req.body.resumen);
 
   pg.connect(connectionString, function(err, client, done){
-    client.query ('INSERT INTO cases_meta (created_by, assigned_to, claim_no, summary, client_id, open, title) VALUES ($1, $2, $3, $4, $5, $6, $7)', [req.body.author, req.body.assigned, req.body.claimNo, req.body.resumen, global.clientId, 'true', req.body.title ]);
+    client.query ('INSERT INTO cases_meta (created_by, assigned_to, claim_no, summary, client_id, status, title) VALUES ($1, $2, $3, $4, $5, $6, $7)', [req.body.author, req.body.assigned, req.body.claimNo, req.body.resumen, global.clientId, 'open', req.body.title ]);
     done();
+    pg.end();
+
   });
   res.sendStatus(200);
 });
@@ -263,6 +278,8 @@ app.get('/specificInsure', function(req, res){
       });
       query.on('end', function(){
         done();
+        pg.end();
+
         console.log('and the results from specific insure will be', resultsSpecInsure);
         return res.json(resultsSpecInsure);
       });
@@ -286,6 +303,8 @@ app.get('/getLastVal', function(req, res){console.log("Get case request received
       });
       query.on('end', function(){
         done();
+        pg.end();
+
         console.log('and the results for case meta information will be...');
         console.log(getVal[0].id);
         global.caseId = getVal[0].id;
@@ -304,11 +323,13 @@ app.post('/caseParams', function(req, res){
 
 app.post('/newCaseNote', function(req, res){
   // console.log('note title is ', req.body.noteTitle , 'and the author is ', req.body.noteAuthor, ', and the body is ', req.body.noteContents);
-
   pg.connect(connectionString, function(err, client, done){
-  client.query('INSERT INTO cases_notes (case_id, title, note, author) VALUES ($1, $2, $3, $4)', [global.caseId, req.body.noteTitle, req.body.noteContents, req.body.noteAuthor ]);
+    console.log('the query we will do contians ', global.caseId, req.body.noteTitle, req.body.noteContents, req.body.noteAuthor );
+    client.query('INSERT INTO cases_notes (case_id, title, note, author) VALUES ($1, $2, $3, $4)', [global.caseId, req.body.noteTitle, req.body.noteContents, req.body.noteAuthor ]);
   done();
+  pg.end();
   });
+  res.sendStatus(200);
 });
 
 app.get('/removeInsurer', function(req, res){
@@ -316,6 +337,8 @@ app.get('/removeInsurer', function(req, res){
   pg.connect(connectionString, function(err, client, done){
     client.query('DELETE FROM insurers WHERE id=' + global.insureId);
     done();
+    pg.end();
+
   });
   res.sendStatus(200);
 });
@@ -327,6 +350,8 @@ app.post('/addInsurer', function(req, res){
   pg.connect(connectionString, function(err, client, done){
     client.query ('INSERT INTO insurers (provider, first_name, last_name, phone, email, client_id, provider_type, notes, claim_number) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)', [req.body.provider, req.body.first_name, req.body.last_name, req.body.phone, req.body.email, global.clientId, req.body.provider_type, req.body.notes, req.body.claim_number]);
     done();
+    pg.end();
+
   });
   res.sendStatus(200);
 
@@ -362,8 +387,41 @@ app.get('/getClosedCases', function(req, res){
     if(err){
       console.log(err);
     }
+    done();
+    pg.end();
+
   });
 });
+
+
+app.get('/getCanceledCases', function(req, res){
+  console.log('request received to get open cases');
+  resultsCase = [];
+  pg.connect(connectionString, function(err, client, done){
+    var searchCases = ("SELECT * FROM cases_meta WHERE client_id=" + global.clientId +" AND status='canceled'");
+    console.log("we are sending over the query");
+    console.log("SELECT * FROM cases_meta WHERE client_id=" + global.clientId +" AND status='canceled'");
+    var query = client.query(searchCases);
+    query.on('row', function(row){
+      resultsCase.push(row);
+    });
+    query.on('end', function(){
+      done();
+      pg.end();
+
+      console.log(resultsCase);
+      return res.json(resultsCase);
+    });
+    if(err){
+      console.log(err);
+    }
+  });
+});
+
+
+
+
+
 
 app.get('/getOpenCases', function(req, res){
   console.log('request received to get open cases');
@@ -378,6 +436,8 @@ app.get('/getOpenCases', function(req, res){
     });
     query.on('end', function(){
       done();
+      pg.end();
+
       console.log(resultsCase);
       return res.json(resultsCase);
     });
@@ -394,9 +454,19 @@ app.post('/updateClientInfos', function(req, res){
   pg.connect(connectionString, function(err, client, done){
     client.query("UPDATE clients SET first_name='"+ req.body.first_name + "',  last_name='"+ req.body.last_name + "', address='"+ req.body.address + "', city='" + req.body.city + "', state='" + req.body.state + "', email='" + req.body.email+ "', phone='" + req.body.phone + "', address2='" + req.body.address2 + "'  WHERE id=" + req.body.id);
     done();
+    pg.end();
+
   });
 
   res.sendStatus(200);
+});
+
+app.get('/hello', function(req, res){
+  res.send(req.user.username);
+});
+
+app.get('/administration', function(req, res){
+  res.sendFile(path.resolve('views/admin.html'));
 });
 
 app.get('/editClientInfo', function(req, res){

@@ -174,6 +174,16 @@ $scope.updateCaseDisplay = function(){
 }]);
 
 CRMLJA.controller('searchPage', ['$scope', '$http', '$window', function($scope, $http, $window){
+        $scope.whoUser = function(){
+          $http({
+            method: 'GET',
+            url: '/hello',
+          }).then(function(response){
+            $scope.username = response.data;
+          });
+        };
+
+        $scope.whoUser();
 
         $scope.test = function(){
           console.log("Search page works!");
@@ -375,7 +385,15 @@ $scope.noteId = 0;
 
 
 CRMLJA.controller('caseCreate', ['$scope', '$http', '$window', function($scope, $http, $window){
-      $http({
+
+          $http({
+            method: 'GET',
+            url: '/hello',
+          }).then(function(response){
+            $scope.username = response.data;
+          });
+
+        $http({
         method: 'GET',
         url: '/getClient',
       }).then(function(response){
@@ -388,7 +406,7 @@ CRMLJA.controller('caseCreate', ['$scope', '$http', '$window', function($scope, 
   $scope.caseCreate = function(){
     var caseCreate = {
       title: $scope.title,
-      author: $scope.author,
+      author: $scope.username,
       assigned: $scope.assignedTo,
       claimNo: $scope.claimNo,
       resumen: $scope.resumen
@@ -425,7 +443,17 @@ CRMLJA.controller('caseCreate', ['$scope', '$http', '$window', function($scope, 
 
 
 CRMLJA.controller('addNote', ['$scope', '$http', '$window', function($scope, $http, $window){
+$scope.username = '';
+
+
       $scope.initial = function(){
+        $http({
+          method: 'GET',
+          url: '/hello',
+        }).then(function(response){
+          $scope.username = response.data;
+        });
+
         $http({
           method: 'GET',
           url: '/getClient',
@@ -453,19 +481,20 @@ CRMLJA.controller('addNote', ['$scope', '$http', '$window', function($scope, $ht
         var newNote = {
           noteTitle: $scope.createNoteTitle,
           noteContents: $scope.addedNote,
-          noteAuthor: $scope.createNoteAuthor
+          noteAuthor: $scope.username
         };
-
+        console.log('the note we are about to submit is ', newNote);
 
         $http({
           method: 'POST',
           url: '/newCaseNote',
           data: newNote
         }).then(function(){
+          console.log('we made it to the noteView function');
             $window.location.href = '/caseNoteView';
         });
 
-        console.log('note title is ', $scope.createNoteTitle, 'the author is ', $scope.createNoteAuthor, ' and the body is ', $scope.addedNote);
+        console.log('note title is ', $scope.createNoteTitle, 'the author is ', $scope.username, ' and the body is ', $scope.addedNote);
 
       };
 }]);
