@@ -1,9 +1,10 @@
 var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
-var urlencodedParser=bodyParser.urlencoded({extended:false});
+
 var app=express();
 app.use( bodyParser.json() );
+app.use(bodyParser.urlencoded({extended:false}));
 
 global.clientId=0;
 global.caseId=0;
@@ -43,11 +44,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 // ################################# ABOVE ADDED FOR LOGIN
 
-// app.get('/', function(req, res){
-//   console.log("Home page hit received");
-//   console.log("our global variable is now ", global.clientId);
-//   res.sendFile(path.resolve('views/index.html'));
-// });
+app.get('/landing', function(req, res){
+  console.log("Home page hit received");
+  console.log("our global variable is now ", global.clientId);
+  res.sendFile(path.resolve('views/landing.html'));
+});
 
 
 

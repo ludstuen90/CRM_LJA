@@ -1,25 +1,25 @@
-var CRMLJA = angular.module('CRMLJA', ['ngRoute']);
+var CRMLJA = angular.module('CRMLJA', []);
 
 
 
 
 
 // ADDED TO LOG IN PROVIDER
-CRMLJA.config(["$routeProvider", function($routeProvider){
-  $routeProvider.
-  when('/home',{
-    templateUrl:"/views/routes/home.html",
-    controller: "LoginController"
-  }).when('/register', {
-    templateUrl:"/views/routes/register.html",
-    controller: "LoginController"
-  }).when('/user', {
-    templateUrl: "/views/routes/user.html",
-    controller: "UserController"
-  }).otherwise({
-    redirectTo:'home'
-  });
-}]);
+// CRMLJA.config(["$routeProvider", function($routeProvider){
+//   $routeProvider.
+//   when('/home',{
+//     templateUrl:"/views/routes/home.html",
+//     controller: "LoginController"
+//   }).when('/register', {
+//     templateUrl:"/views/routes/register.html",
+//     controller: "LoginController"
+//   }).when('/user', {
+//     templateUrl: "/views/routes/user.html",
+//     controller: "UserController"
+//   }).otherwise({
+//     redirectTo:'home'
+//   });
+// }]);
 //  #####################################################
 
 
@@ -605,7 +605,7 @@ CRMLJA.controller('LoginController', ['$scope', '$http', '$window', '$location',
           if(response.data.username) {
             console.log('success: ', response.data);
             // location works with SPA (ng-route)
-            $location.path('/user');
+            $window.location.href = '/landing.html';
           } else {
             console.log('Log in attempt was a failure: ', response);
             $scope.message = "Wrong!!";
