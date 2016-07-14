@@ -2,28 +2,6 @@ var CRMLJA = angular.module('CRMLJA', []);
 
 
 
-
-
-// ADDED TO LOG IN PROVIDER
-// CRMLJA.config(["$routeProvider", function($routeProvider){
-//   $routeProvider.
-//   when('/home',{
-//     templateUrl:"/views/routes/home.html",
-//     controller: "LoginController"
-//   }).when('/register', {
-//     templateUrl:"/views/routes/register.html",
-//     controller: "LoginController"
-//   }).when('/user', {
-//     templateUrl: "/views/routes/user.html",
-//     controller: "UserController"
-//   }).otherwise({
-//     redirectTo:'home'
-//   });
-// }]);
-//  #####################################################
-
-
-
 CRMLJA.controller('Ctrl', function ($scope) {
    $scope.msg = 'hello, world.';
 });
@@ -35,6 +13,8 @@ CRMLJA.filter('capitalize', function() {
 });
 
 CRMLJA.controller('contentArea', ['$scope', '$http', '$window', function($scope, $http, $window){
+
+
 
 $scope.editClientInfo = function(){
   $window.location.href = '/editClientInfo';
@@ -84,8 +64,6 @@ $scope.updateClient = function(){
 
         console.log("before sending to server, searchId is ", sendMe.id);
 
-
-
 };
 
 $scope.getClients = function(){
@@ -107,15 +85,24 @@ $scope.getClients = function(){
           console.log("client response is...");
           console.log(response);
           $scope.client = response.data[0];
-          console.log($scope.client);
+          console.log('client scope is ', $scope.client);
+          if ($scope.client == null) {
+            console.log('woof!');
+            $window.location.href= '/search';
+
+          }
+
+
         });
+
+
         $http({
           method: 'GET',
           url: '/getCases',
         }).then(function(responseCas){
           console.log('cases response is');
           $scope.cases=responseCas.data;
-          console.log($scope.cases);
+          // console.log($scope.cases);
 
         });
 };
@@ -156,7 +143,6 @@ $scope.updateCaseDisplay = function(){
       console.log(response.data);
       $scope.cases = response.data;
     });
-    console.log('cats!');
   } else {
     $http({
       method: 'GET',
