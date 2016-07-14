@@ -51,20 +51,23 @@ passport.use('local', new localStrategy({
 	    pg.connect(connection, function (err, client) {
 	    	console.log('called local - pg');
 	    	var user = {};
-        console.log('user is', user);
+
+        //QUERY BELOW DOES NOT REUTRN IF NOT IN DATABSE
         var query = client.query("SELECT * FROM users WHERE username = $1", [username]);
+        console.log('the user is ', username);
         console.log('query is' , query);
 
         // Handle Errors
         if (err) {
             console.log(err);
         }
-
-        
-
         query.on('row', function (row) {
         	console.log('User obj', row);
         	user = row;
+
+          console.log('user is now ', user);
+          console.log('user.password is ', user.password);
+          console.log('password is ', password);
 
           // Hash and compare
           if(encryptLib.comparePassword(password, user.password)) {
