@@ -1,7 +1,6 @@
 var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
-var jade = require('jade');
 
 var app=express();
 app.use( bodyParser.json() );
@@ -93,9 +92,9 @@ app.post('/sendClient', function(req, res){
   res.sendStatus(200);
 });
 
-app.get('/360View', function(req, res){
-  res.sendFile(path.resolve('views/index.html'));
-});
+// app.get('/360View', function(req, res){
+//   res.sendFile(path.resolve('views/index.html'));
+// });
 
 app.post('/getInfo', function(req, res){
   console.log("Get client request received!");
@@ -514,6 +513,16 @@ app.use( express.static('public'));
 app.use('/register', register);
 app.use('/user', user);
 app.use('/*', index);
+
+app.use(function(req, res, next) {
+    if (req.session.username == null){
+// if user is not logged-in redirect back to login page //
+        res.redirect('/');
+    }   else{
+        next();
+    }
+});
+
 
 // app.use('/', express.static(__dirname+ '../views/index'));
 
