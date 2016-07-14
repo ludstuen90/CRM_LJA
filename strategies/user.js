@@ -35,7 +35,7 @@ passport.use('local', new localStrategy({
                         // no good.
                         done(null, false, {message: 'Incorrect credentials.'});
                     }
-                })
+                });
             }
         });
     }

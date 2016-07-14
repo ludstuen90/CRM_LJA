@@ -14,6 +14,7 @@ router.get('/', function(req, res) {
 
     } else {
         // failure best handled on the server. do redirect here.
+        console.log('is not authenticated');
         res.send(false);
     }
 });

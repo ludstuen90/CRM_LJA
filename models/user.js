@@ -27,8 +27,8 @@ UserSchema.pre('save', function(next) {
 
             user.password = hash;
             next();
-        })
-    })
+        });
+    }); 
 });
 
 // Used by login methods to compare login form password to DB password

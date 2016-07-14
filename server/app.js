@@ -51,6 +51,16 @@ app.get('/landing', function(req, res){
 });
 
 
+app.get('/failure', function(req, res){
+  console.log('Request received at failure section');
+  res.sendFile(path.resolve('views/failure.html'));
+});
+
+
+app.get('/logout', function(req, res){
+  req.logout();
+  res.redirect('/');
+});
 
 app.get('/getInsurer', function(req, res){
   console.log("Get insurer request received!");
