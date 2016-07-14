@@ -605,10 +605,11 @@ CRMLJA.controller('LoginController', ['$scope', '$http', '$window', '$location',
           if(response.data.username) {
             console.log('success: ', response.data);
             // location works with SPA (ng-route)
-            $window.location.href = '/landing.html';
+            $window.location.href = '/landing';
           } else {
             console.log('Log in attempt was a failure: ', response);
-            $scope.message = "Wrong!!";
+            $scope.message = response;
+            // $scope.message = "Wrong!!";
           }
         });
       }

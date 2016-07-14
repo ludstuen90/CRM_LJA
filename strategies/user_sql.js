@@ -19,7 +19,7 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(id, done) {
   //TO DO SQL query
   console.log('called deserializeUser');
-  pg.connect(connection, function (err, client) {
+  pg.connect(connection, function (err, client, complete) {
 
     var user = {};
     console.log('called deserializeUser - pg');
@@ -33,7 +33,7 @@ passport.deserializeUser(function(id, done) {
 
       // After all data is returned, close connection and return results
       query.on('end', function () {
-          client.end();
+          complete();
       });
 
       // Handle Errors
