@@ -46,7 +46,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 // ################################# ABOVE ADDED FOR LOGIN
 
-app.get('/landing', function(req, res){
+app.get('/landing', isAuthenticated, function(req, res){
   console.log("Home page hit received");
   console.log("our global variable is now ", global.clientId);
   res.sendFile(path.resolve('views/landing.html'));
@@ -464,43 +464,43 @@ app.get('/hello', function(req, res){
   res.send(req.user.username);
 });
 
-app.get('/administration', function(req, res){
+app.get('/administration', isAuthenticated, function(req, res){
   res.sendFile(path.resolve('views/admin.html'));
 });
 
-app.get('/editClientInfo', function(req, res){
+app.get('/editClientInfo', isAuthenticated, function(req, res){
   res.sendFile(path.resolve('views/editClientInfo.html'));
 });
 
-app.get('/insureAdd', function(req, res){
+app.get('/insureAdd', isAuthenticated, function(req, res){
   res.sendFile(path.resolve('views/insurerAdd.html'));
 });
 
-app.get('/search', function(req, res){
+app.get('/search', isAuthenticated, function(req, res){
   res.sendFile(path.resolve('views/search.html'));
 });
 
-app.get('/caseNoteView', function(req, res){
+app.get('/caseNoteView', isAuthenticated, function(req, res){
   res.sendFile(path.resolve('views/caseNoteView.html'));
 });
 
-app.get('/case', function(req, res){
+app.get('/case', isAuthenticated, function(req, res){
   res.sendFile(path.resolve('views/case.html'));
 });
 
-app.get('/360', function(req, res){
+app.get('/360', isAuthenticated, function(req, res){
   res.sendFile(path.resolve('views/360.html'));
 });
 
-app.get('/caseCreate', function(req, res){
+app.get('/caseCreate', isAuthenticated, function(req, res){
   res.sendFile(path.resolve('views/caseCreate.html'));
 });
 
-app.get('/caseAddNote', function(req, res){
+app.get('/caseAddNote', isAuthenticated, function(req, res){
   res.sendFile(path.resolve('views/caseAddNote.html'));
 });
 
-app.get('/insureEdit', function(req, res){
+app.get('/insureEdit', isAuthenticated, function(req, res){
   res.sendFile(path.resolve('views/insureEdit.html'));
 });
 
@@ -514,14 +514,33 @@ app.use('/register', register);
 app.use('/user', user);
 app.use('/*', index);
 
-app.use(function(req, res, next) {
-    if (req.session.username == null){
-// if user is not logged-in redirect back to login page //
+
+function isAuthenticated(req, res, next) {
+
+    // do any checks you want to in here
+
+    // CHECK THE USER STORED IN SESSION FOR A CUSTOM VARIABLE
+    // you can do this however you want with whatever variables you set up
+    if (req.user == null){
         res.redirect('/');
-    }   else{
-        next();
     }
-});
+
+    if (req.user.username !== undefined)
+        return next();
+    // IF A USER ISN'T LOGGED IN, THEN REDIRECT THEM SOMEWHERE
+    res.redirect('/');
+}
+
+
+//
+// app.use(function(req, res, next) {
+//     if (req.session.username == null){
+// // if user is not logged-in redirect back to login page //
+//         res.redirect('/');
+//     }   else{
+//         next();
+//     }
+// });
 
 
 // app.use('/', express.static(__dirname+ '../views/index'));
