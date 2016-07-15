@@ -76,13 +76,75 @@
   <div class="container">
     <div class="col-md-12">
 
+
+
+          <style>
+        .typeahead-demo .custom-popup-wrapper {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          z-index: 1000;
+          display: none;
+          background-color: #f9f9f9;
+        }
+
+        .typeahead-demo .custom-popup-wrapper > .message {
+          padding: 10px 20px;
+          border-bottom: 1px solid #ddd;
+          color: #868686;
+        }
+
+        .typeahead-demo .custom-popup-wrapper > .dropdown-menu {
+          position: static;
+          float: none;
+          display: block;
+          min-width: 160px;
+          background-color: transparent;
+          border: none;
+          border-radius: 0;
+          box-shadow: none;
+        }
+      </style>
+
+      <script type="text/ng-template" id="customTemplate.html">
+        <a>
+            <img ng-src="http://upload.wikimedia.org/wikipedia/commons/thumb/{{match.model.flag}}" width="16">
+            <span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span>
+        </a>
+      </script>
+
+      <script type="text/ng-template" id="customPopupTemplate.html">
+        <div class="custom-popup-wrapper"
+           ng-style="{top: position().top+'px', left: position().left+'px'}"
+           style="display: block;"
+           ng-show="isOpen() && !moveInProgress"
+           aria-hidden="{{!isOpen()}}">
+          <p class="message">select location from drop down.</p>
+
+          <ul class="dropdown-menu" role="listbox">
+              <li ng-repeat="match in matches track by $index" ng-class="{active: isActive($index) }"
+                  ng-mouseenter="selectActive($index)" ng-click="selectMatch($index)" role="option" id="{{::match.id}}">
+                  <div uib-typeahead-match index="$index" match="match" query="query" template-url="templateUrl"></div>
+              </li>
+          </ul>
+        </div>
+      </script>
+
+      <div class='container-fluid typeahead-demo' ng-controller="TypeaheadCtrl">
+
+
+
+
+
+
+
 <br>
       <table id="createCaseLayout">
         <tr>
       <td><b>Author</b></td><td> <input type="text" id="caseCrtMnText" value={{username}} readonly placeholder="Author"></input></td>
       </tr>
       <tr>
-      <td><b>Assigned To</b>:</td><td> <input type="text" id="caseCrtMnText" ng-model="assignedTo" placeholder="Assigned To"></input></td>
+      <td><b>Assigned To</b>:</td><td> <input type="text" id="caseCrtMnText" ng-model="selected" uib-typeahead="person for person in usersBare | filter:$viewValue | limitTo:8"  placeholder="Assigned To"></input></td>
     </tr>
     <tr>
       <td><b>Claim Number</b>:</td><td> <input type="text" id="caseCrtMnText" ng-model="claimNo" placeholder="Claim Number"></input></td>
@@ -97,7 +159,7 @@
 
       <br>
       <button type="submit" ng-click="caseCreate()">Save Case</button>
-
+    </div>
     </div>
   </div>
 </div>

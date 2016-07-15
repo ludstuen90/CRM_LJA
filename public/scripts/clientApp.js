@@ -389,42 +389,7 @@ CRMLJA.controller('caseCreate', ['$scope', '$http', '$window', function($scope, 
       });
 
 
-  $scope.caseCreate = function(){
-    var caseCreate = {
-      title: $scope.title,
-      author: $scope.username,
-      assigned: $scope.assignedTo,
-      claimNo: $scope.claimNo,
-      resumen: $scope.resumen
-    };
-    console.log(caseCreate);
 
-
-    $http({
-      method: 'POST',
-      url: '/newCase',
-      data: caseCreate
-    }).then(function(){
-
-      $http({
-        method:'GET',
-        url: '/getLastVal',
-      }).then(function(){
-        $window.location.href = '/case';
-
-      });
-
-
-      // $http({
-      //   method: 'GET',
-      //   url: '/noteSee',
-      // }).then(function(response){
-      //   $scope.noteId = response.data;
-        console.log('finished case create');
-        // $scope.findNote();
-      // });
-    });
-  };
 }]);
 
 
@@ -716,7 +681,65 @@ var newPerson = {
 }]);
 
 
-angular.module('CRMLJA').controller('TypeaheadCtrl', function($scope, $http) {
+angular.module('CRMLJA').controller('TypeaheadCtrl',  function($scope, $http, $window) {
+
+
+  $scope.caseCreate = function(){
+    var caseCreate = {
+      title: $scope.title,
+      createdby: $scope.username,
+      assigned: $scope.selected,
+      claimNo: $scope.claimNo,
+      resumen: $scope.resumen
+    };
+    console.log(caseCreate);
+
+
+    $http({
+      method: 'POST',
+      url: '/newCase',
+      data: caseCreate
+    }).then(function(){
+      $http({
+        method:'GET',
+        url: '/getLastVal',
+      }).then(function(){
+        $window.location.href = '/case';
+      });
+
+
+      // $http({
+      //   method: 'GET',
+      //   url: '/noteSee',
+      // }).then(function(response){
+      //   $scope.noteId = response.data;
+        console.log('finished case create');
+        // $scope.findNote();
+      // });
+    });
+  };
+
+
+  $scope.usersBare = [];
+
+  $scope.pullUsers = function(){
+    $http({
+      method: 'GET',
+      url: '/getUsers'
+    }).then(function(response){
+      $scope.users = response.data;
+      console.log('list of users: ', $scope.users);
+    }).then(function(){
+
+      for (var i = 0; i < $scope.users.length; i++) {
+        $scope.usersBare.push($scope.users[i].username);
+      }
+
+      console.log($scope.usersBare);
+    });
+  };
+
+  $scope.pullUsers();
 
   var _selected;
 

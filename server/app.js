@@ -245,7 +245,7 @@ app.post('/newCase', function(req, res){
   console.log('summary', req.body.resumen);
 
   pg.connect(connectionString, function(err, client, done){
-    client.query ('INSERT INTO cases_meta (created_by, assigned_to, claim_no, summary, client_id, status, title) VALUES ($1, $2, $3, $4, $5, $6, $7)', [req.body.author, req.body.assigned, req.body.claimNo, req.body.resumen, global.clientId, 'open', req.body.title ]);
+    client.query ('INSERT INTO cases_meta (created_by, assigned_to, claim_no, summary, client_id, status, title) VALUES ($1, $2, $3, $4, $5, $6, $7)', [req.body.createdby, req.body.assigned, req.body.claimNo, req.body.resumen, global.clientId, 'open', req.body.title ]);
     done();
     pg.end();
 
@@ -530,6 +530,37 @@ req.body.lName,
   });
   res.sendStatus(200);
 });
+
+
+
+
+app.get('/getUsers', function(req, res){
+  resultsUsers = [];
+  pg.connect(connectionString, function(err, client, done){
+    var searchUsers = ("SELECT username FROM users");
+    console.log("SELECT username FROM users");
+    var query = client.query(searchUsers);
+    query.on('row', function(row){
+      resultsUsers.push(row);
+    });
+    query.on('end', function(){
+      done();
+      pg.end();
+
+      console.log(resultsUsers);
+      return res.json(resultsUsers);
+    });
+    if(err){
+      console.log(err);
+    }
+  });
+});
+
+
+
+
+
+
 //Assign Static Folder
 app.use( express.static('public'));
 
