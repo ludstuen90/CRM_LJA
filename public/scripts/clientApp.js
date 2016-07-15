@@ -1,4 +1,4 @@
-var CRMLJA = angular.module('CRMLJA', []);
+var CRMLJA = angular.module('CRMLJA', ['ui.bootstrap']);
 
 
 
