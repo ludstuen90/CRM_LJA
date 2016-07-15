@@ -84,6 +84,12 @@ table#caseNotes {
   table-layout:fixed;
 
 }
+
+#caseTitleField {
+  width:350px;
+
+}
+
 #caseNotes th, td {
   padding:3px;
 }

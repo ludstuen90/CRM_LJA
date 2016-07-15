@@ -19,7 +19,7 @@ var pg = require('pg');
 var connectionString= 'postgres://localhost:5432/LJACRM';
 
 //Spin up local server
-app.listen(3000, 'localhost', function(req, res){
+app.listen(3000, function(req, res){
   console.log("Server is listening on port 3000");
 });
 
