@@ -46,6 +46,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 // ################################# ABOVE ADDED FOR LOGIN
 
+app.get('/createClient', isAuthenticated, function(req, res){
+  console.log('hit on createClient received');
+  res.sendFile(path.resolve('views/createClient.html'));
+});
+
 app.get('/landing', isAuthenticated, function(req, res){
   console.log("Home page hit received");
   console.log("our global variable is now ", global.clientId);
@@ -504,6 +509,27 @@ app.get('/insureEdit', isAuthenticated, function(req, res){
   res.sendFile(path.resolve('views/insureEdit.html'));
 });
 
+
+
+app.post('/newClientSave', function(req, res){
+  console.log('received a request to save a new client!');
+console.log(req.body.fNameNewClient,
+req.body.lName,
+  req.body.address,
+  req.body.address2,
+  req.body.city,
+  req.body.state,
+  req.body.email,
+  req.body.phone);
+
+  pg.connect(connectionString, function(err, client, done){
+    client.query ('INSERT INTO clients (first_name, last_name, address, address2, city, state, email, phone) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)', [req.body.fNameNewClient, req.body.lName, req.body.address, req.body.address2, req.body.city, req.body.state, req.body.email, req.body.phone]);
+    done();
+    pg.end();
+
+  });
+  res.sendStatus(200);
+});
 //Assign Static Folder
 app.use( express.static('public'));
 

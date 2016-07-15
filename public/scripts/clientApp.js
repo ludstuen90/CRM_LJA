@@ -677,3 +677,45 @@ $scope.saveClientEdit = function(){
   });
 };
 }]);
+
+
+
+CRMLJA.controller('clientCreate', ['$scope', '$http', '$window', function($scope, $http, $window) {
+  $scope.newNote = {
+    noteTitle: $scope.createNoteTitle,
+    noteContents: $scope.addedNote,
+    noteAuthor: $scope.username
+  };
+
+
+
+$scope.addClient = function() {
+
+var newPerson = {
+    fNameNewClient: $scope.fNameNewClient,
+    lName: $scope.lName,
+    address: $scope.address,
+    address2: $scope.address2,
+    city: $scope.city,
+    state: $scope.state,
+    email: $scope.email,
+    phone: $scope.phone
+  };
+
+
+  $http({
+    method: 'POST',
+    url: '/newClientSave',
+    data:  newPerson
+  }).then(function(){
+    $window.location.href = '/administration';
+
+  });
+  console.log(newPerson);
+
+
+};
+
+
+
+}]);

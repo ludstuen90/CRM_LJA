@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html ng-app="CRMLJA">
+  <head>
+    <meta charset="utf-8">
+    <title>Client 360 Page</title>
+    <script type="text/javascript" src="vendors/angular.min.js"></script>
+    <script type="text/javascript" src="scripts/clientApp.js"></script>
+    <link rel="stylesheet" href="vendors/bootstrap.min.css"></link>
+    <link rel="stylesheet" href="assets/sheetrock.css"></link>
+  </head>
+  <body>
+    <div ng-include="'partials/navbar.html'"></div>
+
+    <br><br>
+<!--
+    <div class="row">
+      <div class="container">
+        <div class="col-md-12">
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="/case">Case</a></li>
+            <li><a href="/caseNoteView">Case Notes</a></li>
+          </ul>
+        </div>
+      </div>
+    </div> -->
+<br>
+<div ng-controller="clientCreate">
+      <div class="row">
+      <div class="container">
+        <div class="col-md-12">
+          <ul class="nav nav-tabs">
+            <li><a href="/360">Client 360 Page</a></li>
+            <li class="active"><a href="/insureEdit">Edit Insurer</a></li>
+          </ul>
+          <br>
+        <h4><b>Create Client</b></h4>
+        <br>
+        <table>
+          <tr>
+            <td><b>First Name:</b></td><td width="300px"><input ng-model="fNameNewClient" id="createNoteTitle" placeholder="Note Title" type="text"/>
+</td>
+          </tr>
+          <tr>
+            <td><b>Last Name:</b> </td><td><input id="clientAddField" type="text" ng-model="lName" /></td>
+          </tr>
+          <tr>
+            <td><b>Address:</b> </td><td><input id="clientAddField" type="text" ng-model="address"/></td>
+          </tr>
+          <tr>
+            <td><b>Address (2):</b></td><td> <input id="clientAddField" type="text" ng-model="address2"/></td>
+          </tr>
+          <tr>
+            <td><b>City:</b></td><td><input id="clientAddField" type="text" ng-model="city"/></td>
+          </tr>
+          <tr>
+            <td><b>State:</b></td><td><input type="text" id="clientAddField" ng-model="state"/></td>
+          </tr>
+          <tr>
+            <td><b>Email:</b></td><td> <input type="text" id="clientAddField" ng-model="email"/></td>
+          </tr>
+          <tr>
+            <td><b>Phone:</b></td><td> <input type="text" id="clientAddField" ng-model="phone"/></td>
+          </tr>
+
+    </table>
+
+    <button type="submit" ng-click="addClient()">Save New Client</button>
+
+    </div>
+  </div>
+</div>
+
+<div ng-include="'partials/footer.html'"></div>
+
+</body>
+</html>
