@@ -623,7 +623,7 @@ CRMLJA.controller('LoginController', ['$scope', '$http', '$window', '$location',
             $window.location.href = '/landing';
           } else {
             console.log('Log in attempt was a failure: ', response);
-            $scope.message = "Wrong Password";
+            $scope.message = "Incorrect User Credentials";
           }
         });
       }
