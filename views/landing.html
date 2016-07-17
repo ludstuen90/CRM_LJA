@@ -49,7 +49,7 @@
                   <tr>
                     <td>{{cases[$index].id}}</td>
                     <td>{{cases[$index].status | capitalize}}</td>
-                    <td><a  ng-click="caseClick(cases[$index].id)" >{{cases[$index].title}}</a></td>
+                    <td><a  ng-click="caseClick($index)" >{{cases[$index].title}}</a></td>
                     <td>{{cases[$index].assigned_to}}</td>
                     <td>{{cases[$index].last_modified}}
                   </tr>

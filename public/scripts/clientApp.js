@@ -216,6 +216,7 @@ var myUser = {
       $scope.cases=responseCas.data;
       console.log('cases response is', $scope.cases);
 
+
       // console.log($scope.cases);
     });
   });
@@ -231,21 +232,33 @@ $scope.caseClick = function(index){
   console.log(index);
 
   var caseSend = {
-    case_id: index
+    case_id: $scope.cases[index].id
   };
 
-    $http({
-      method: 'POST',
-      url: '/caseParams',
-      data: caseSend
-    }).then(function(){
-      console.log('Now we will go to the case');
-      $scope.toCase();
-
-    });
-  $scope.toCase = function(){
-    $window.location.href = '/case';
+  var sendMe = {
+    id: $scope.cases[index].client_id
   };
+      $http({
+        method: 'POST',
+        url: '/sendClient',
+        data: sendMe
+      }).then(function(){
+        $http({
+          method: 'POST',
+          url: '/caseParams',
+          data: caseSend
+        }).then(function(){
+          console.log('Now we will go to the case');
+          $scope.toCase();
+
+        });
+        $scope.toCase = function(){
+        $window.location.href = '/case';
+        };
+
+      });
+
+
 };
 
 
