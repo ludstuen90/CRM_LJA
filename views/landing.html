@@ -20,9 +20,43 @@
         <div class="container">
           <div class="col-md-12">
             <h1>Welcome, {{username}}!</h1>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="container">
+          <div class="col-md-6">
             <h4>Client Search</h4>
-            <input type="text" ng-model="clientId" placeholder="Enter a client ID"></input>
+            <input type="text" id="SearchHome" ng-model="clientId" placeholder="Enter a client ID"></input><br>
             <button type="submit" ng-click="searchClient()">Submit</button>
+          </div>
+
+          <div class="col-md-6">
+
+            <h4>Cases Assigned to me:</h4>
+
+            <table id="cases" >
+                  <tr>
+                    <td><b>Case ID:</b></td>
+                    <td><b>Case Status:</b></td>
+                    <td><b>Case Title:</b></td>
+                    <td><b>Assigned To:</b></td>
+                    <td><b>Created At:</b></td>
+                  </tr>
+                </table>
+
+                <table id="cases"  ng-repeat= 'thing in cases'>
+                  <tr>
+                    <td>{{cases[$index].id}}</td>
+                    <td>{{cases[$index].status | capitalize}}</td>
+                    <td><a  ng-click="caseClick(cases[$index].id)" >{{cases[$index].title}}</a></td>
+                    <td>{{cases[$index].assigned_to}}</td>
+                    <td>{{cases[$index].last_modified}}
+                  </tr>
+                </table>
+
+
+
           </div>
         </div>
       </div>

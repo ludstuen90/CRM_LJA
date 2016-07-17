@@ -176,6 +176,40 @@ app.get('/getCases', function(req, res){
   });
 });
 
+
+app.post('/getCasesMyUser', function(req, res){
+  console.log('getCasesMyUser receiving a username of ', req.user.username );
+  global.userName = req.user.username;
+  res.sendStatus(200);
+});
+
+app.get('/getMyCases', function(req, res){
+  console.log('username is ', global.userName);
+  var myUser = global.userName;
+
+  console.log("Get case request received!");
+  myCases = [];
+  pg.connect(connectionString, function(err, client, done){
+    var queryMyCases = ("SELECT * FROM cases_meta WHERE assigned_to='" + myUser + "'AND status='open'");
+    console.log("we are sending over the query");
+    console.log("SELECT * FROM cases_meta WHERE assigned_to='" + myUser + "AND status='open'");
+    var query = client.query(queryMyCases);
+    query.on('row', function(row){
+      myCases.push(row);
+    });
+    query.on('end', function(){
+      done();
+      console.log(myCases);
+      pg.end();
+
+      return res.json(myCases);
+    });
+    if(err){
+      console.log(err);
+    }
+  });
+});
+
 app.get('/caseDet', function(req, res){
   console.log("Get case request received!");
   resultsCaseNot = [];

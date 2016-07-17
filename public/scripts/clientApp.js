@@ -198,6 +198,55 @@ CRMLJA.controller('searchPage', ['$scope', '$http', '$window', function($scope, 
         };
 
 
+$scope.myCases = function(){
+
+var myUser = {
+  username: 'null'
+};
+
+  $http({
+    method: 'POST',
+    url: '/getCasesMyUser',
+    data: myUser
+  }).then(function(){
+    $http({
+      method: 'GET',
+      url: '/getMyCases',
+    }).then(function(responseCas){
+      $scope.cases=responseCas.data;
+      console.log('cases response is', $scope.cases);
+
+      // console.log($scope.cases);
+    });
+  });
+
+
+};
+
+$scope.myCases();
+
+
+$scope.caseClick = function(index){
+  console.log("received request at caseClick of: ");
+  console.log(index);
+
+  var caseSend = {
+    case_id: index
+  };
+
+    $http({
+      method: 'POST',
+      url: '/caseParams',
+      data: caseSend
+    }).then(function(){
+      console.log('Now we will go to the case');
+      $scope.toCase();
+
+    });
+  $scope.toCase = function(){
+    $window.location.href = '/case';
+  };
+};
 
 
 
