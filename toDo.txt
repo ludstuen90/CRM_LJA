@@ -1,6 +1,0 @@
-Add Error validation to "add note feature"
-Make so case note loads automatically
-
-
-
-case ID doesn’t update when saving
