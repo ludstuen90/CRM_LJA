@@ -23,15 +23,15 @@
           <ul class="nav nav-tabs">
             <li><a href="/case">Case</a></li>
             <li><a href="/caseNoteView">Case Notes</a></li>
-            <li class="active"><a href="/caseAddNote">Add Note</a></li>
-            <li><a href="/caseReassign">Reassign Case</a></li>
+            <li><a href="/caseAddNote">Add Note</a></li>
+            <li class="active"><a href="/caseReassign">Reassign Case</a></li>
           </ul>
         </div>
       </div>
     </div>
 <br>
 
-<div ng-controller="addNote">
+<div ng-controller="reAssign">
       <div class="row">
       <div class="container">
         <div class="col-md-6">
@@ -65,13 +65,15 @@
         <div class="row">
           <div class="container">
             <div class="col-md-12">
-              <input ng-model="createNoteTitle" id="createNoteTitle" placeholder="Note Title" type="text"/>
-              <textarea ng-model="addedNote" id="addNoteField">
-              </textarea>
+              <div class='container-fluid typeahead-demo' ng-controller="TypeaheadCtrl">
 
-              <input value={{username}} id="createNoteAuthor" placeholder="Author" readonly type="text",>
+              <p><b>Reassign Case: </b></p>
+              <p>Assign case to user: <input type="text" id="caseCrtMnText" ng-model="selected" uib-typeahead="person for person in usersBare | filter:$viewValue | limitTo:8"  placeholder="Assigned To"></p>
 
-              <button type="submit" ng-click="noteSubmit()">Submit Note</button>
+              <button type="submit" ng-click="caseReassign()">Submit</button>
+              <div class='container-fluid typeahead-demo' ng-controller="TypeaheadCtrl">
+
+
 
             </div>
           </div>

@@ -451,6 +451,17 @@ app.get('/getOpenCases', function(req, res){
   });
 });
 
+app.post('/caseReassignData', function(req, res){
+  console.log(req.body.username);
+  pg.connect(connectionString, function(err, client, done){
+    client.query("UPDATE cases_meta SET assigned_to='" + req.body.username + "'  WHERE id=" + global.caseId);
+    done();
+    pg.end();
+});
+res.sendStatus(200);
+
+});
+
 app.post('/updateClientInfos', function(req, res){
   console.log("Made it to Client Info Update");
   console.log(req.body.first_name);
@@ -487,6 +498,10 @@ app.get('/search', isAuthenticated, function(req, res){
 
 app.get('/caseNoteView', isAuthenticated, function(req, res){
   res.sendFile(path.resolve('views/caseNoteView.html'));
+});
+
+app.get('/caseReassign', isAuthenticated, function(req, res){
+  res.sendFile(path.resolve('views/caseReassign.html'));
 });
 
 app.get('/case', isAuthenticated, function(req, res){
