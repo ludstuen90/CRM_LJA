@@ -37,9 +37,10 @@
 
             <table id="cases" >
                   <tr>
-                    <td><b>Case ID:</b></td>
+                    <td><b>Case<br> ID:</b></td>
+                    <td><b>Client<br> ID:</b></td>
                     <td><b>Case Status:</b></td>
-                    <td><b>Case Title:</b></td>
+                    <td><b>Case<br>Title:</b></td>
                     <td><b>Assigned To:</b></td>
                     <td><b>Created At:</b></td>
                   </tr>
@@ -48,6 +49,7 @@
                 <table id="cases"  ng-repeat= 'thing in cases'>
                   <tr>
                     <td>{{cases[$index].id}}</td>
+                    <td>{{cases[$index].client_id}}</td>
                     <td>{{cases[$index].status | capitalize}}</td>
                     <td><a  ng-click="caseClick($index)" >{{cases[$index].title}}</a></td>
                     <td>{{cases[$index].assigned_to}}</td>

@@ -14,9 +14,10 @@ global.noteId=0;
 global.insureId=0;
 
 //include Database
+//Include information for Heroku Database
 
 var pg = require('pg');
-var connectionString= 'postgres://localhost:5432/LJACRM';
+var connectionString= '**';
 
 //Spin up local server
 app.listen(3000, function(req, res){

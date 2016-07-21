@@ -52,13 +52,15 @@ table#cases  td {
     width:100px;
     table-layout: fixed;
 
+
   }
 
 
 table#cases  {
-      width:500px;
+      width:650px;
       border:solid 2px;
       table-layout: fixed;
+
     }
 
   table#casesNoBorder{
@@ -171,7 +173,7 @@ width:450px;
 }
 
 #SearchHome{
-  width:80%;
+  width:70%;
 }
 
 #editField{
