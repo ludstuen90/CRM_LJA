@@ -15,6 +15,7 @@ global.insureId=0;
 
 //include Database
 //Include information for Heroku Database
+//Will include SQL Strategy
 
 var pg = require('pg');
 var connectionString= '**';
