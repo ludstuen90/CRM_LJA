@@ -29,7 +29,12 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
       console.log(JSON.stringify(row));
     });
 });
-var connectionString= '**';
+var connectionString= 'postgres://uxygwxoycaioiu:FsT9rQ_Z6v_Um6ViRoMWqYAdaN@ec2-50-19-227-171.compute-1.amazonaws.com:5432/d696tr2ks9oet9';
+
+///below added as per Heroku instructions
+
+
+
 
 //Spin up local server
 app.listen(process.env.PORT || 3000, function(req, res){
