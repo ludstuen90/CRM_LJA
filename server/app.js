@@ -18,17 +18,16 @@ global.insureId=0;
 //Will include SQL Strategy
 
 var pg = require('pg');
-pg.defaults.ssl = true;
-pg.connect(process.env.DATABASE_URL, function(err, client) {
-  if (err) throw err;
-  console.log('Connected to postgres! Getting schemas...');
-
-  client
-    .query('SELECT table_schema,table_name FROM information_schema.tables;')
-    .on('row', function(row) {
-      console.log(JSON.stringify(row));
-    });
-});
+// pg.connect(process.env.DATABASE_URL, function(err, client) {
+//   if (err) throw err;
+//   console.log('Connected to postgres! Getting schemas...');
+//
+//   client
+//     .query('SELECT table_schema,table_name FROM information_schema.tables;')
+//     .on('row', function(row) {
+//       console.log(JSON.stringify(row));
+//     });
+// });
 var connectionString= 'postgres://uxygwxoycaioiu:FsT9rQ_Z6v_Um6ViRoMWqYAdaN@ec2-50-19-227-171.compute-1.amazonaws.com:5432/d696tr2ks9oet9';
 
 ///below added as per Heroku instructions
