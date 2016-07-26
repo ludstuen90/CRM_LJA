@@ -28,8 +28,12 @@ var pg = require('pg');
 //       console.log(JSON.stringify(row));
 //     });
 // });
-var connectionString= 'postgres://uxygwxoycaioiu:FsT9rQ_Z6v_Um6ViRoMWqYAdaN@ec2-50-19-227-171.compute-1.amazonaws.com:5432/d696tr2ks9oet9';
-
+if(process.env.DATABASE_URL != undefined) {
+    connectionString = process.env.DATABASE_URL + "?ssl=true";
+} else {
+    // running locally, use our local database instead
+    connectionString = 'postgres://localhost:5432/LJACRM';
+}
 ///below added as per Heroku instructions
 
 
