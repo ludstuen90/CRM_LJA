@@ -26,7 +26,7 @@ app.listen(3000, function(req, res){
 });
 
 
-// ################################# BELOW ADDED FOR LOG IN
+// ################################# BELOW ADDED FOR LOG IN 
 var passport = require('../strategies/user_sql.js');
 var session = require('express-session');
 
