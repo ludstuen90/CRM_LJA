@@ -94,3 +94,6 @@
     <pre>Model: {{customPopupSelected | json}}</pre>
     <input type="text" ng-model="customPopupSelected" placeholder="Custom popup template" uib-typeahead="state as state.name for state in statesWithFlags | filter:{name:$viewValue}" typeahead-popup-template-url="customPopupTemplate.html" class="form-control"> -->
 </div>
+
+
+heroku pg:backups restore 'http://ludstuen.atwebpages.com/Primecrm.dump' DATABASE_URL
