@@ -14,12 +14,9 @@ CRMLJA.filter('capitalize', function() {
 
 CRMLJA.controller('contentArea', ['$scope', '$http', '$window', function($scope, $http, $window){
 
-
-
-$scope.editClientInfo = function(){
-  $window.location.href = '/editClientInfo';
-};
-
+      $scope.editClientInfo = function(){
+        $window.location.href = '/editClientInfo';
+      };
 
       $scope.angularWorks = function(){
         console.log('angular works');
@@ -48,25 +45,35 @@ $scope.editClientInfo = function(){
 };
 
 $scope.updateClient = function(){
-        var sendMe = {
-          id: $scope.idIn
-        };
-        $http({
-          method: 'POST',
-          url: '/sendClient',
-          data: sendMe
-        }).then(function(){
-          console.log("We have completed the post");
-          $scope.getClients();
-          // $scope.client = response.data[0];
-          console.log($scope.client);
-        });
 
-        console.log("before sending to server, searchId is ", sendMe.id);
+        // $http({
+        //   method: 'POST',
+        //   url: '/sendClient',
+        //   data: sendMe
+        // }).then(function(){
+        //   console.log("We have completed the post");
+        //   $scope.getClients();
+        //   // $scope.client = response.data[0];
+        //   console.log($scope.client);
+        // });
+
+        // console.log("before sending to server, searchId is ", sendMe.id);
 
 };
 
 $scope.getClients = function(){
+  $scope.client = sessionStorage.getItem("clientId");
+  console.log('scope . client is ', $scope.client);
+  if ($scope.client == undefined) {
+    console.log('woof!');
+    $window.location.href= '/search';
+  }
+
+
+        var sendMe = {
+          id: $scope.client
+        };
+        console.log('send me is ', sendMe);
     $scope.statusOfTheCase = 'open';
         console.log("get clients was called!");
         $http({
@@ -79,22 +86,15 @@ $scope.getClients = function(){
         });
 
         $http({
-          method: 'GET',
+          method: 'POST',
           url: '/getClient',
-        }).then(function(response){
+          data: sendMe
+                }).then(function(response){
           console.log("client response is...");
           console.log(response);
           $scope.client = response.data[0];
           console.log('client scope is ', $scope.client);
-          if ($scope.client == null) {
-            console.log('woof!');
-            $window.location.href= '/search';
-
-          }
-
-
-        });
-
+                });
 
         $http({
           method: 'GET',
@@ -182,18 +182,21 @@ CRMLJA.controller('searchPage', ['$scope', '$http', '$window', function($scope, 
 
         $scope.searchClient = function(){
           console.log("We are now searching for...", $scope.clientId);
-          var sendMe = {
-            id: $scope.clientId
-          };
+          sessionStorage.setItem("clientId", $scope.clientId);
+          $scope.nextPage();
 
-          $http({
-            method: 'POST',
-            url: '/sendClient',
-            data: sendMe
-          }).then(function(){
-            console.log('post call completed.');
-            $scope.nextPage();
-          });
+
+          // var sendMe = {
+          //   id: $scope.clientId
+          // };
+          // $http({
+          //   method: 'POST',
+          //   url: '/sendClient',
+          //   data: sendMe
+          // }).then(function(){
+          //   console.log('post call completed.');
+          //   // $scope.nextPage();
+          // });
 
         };
 

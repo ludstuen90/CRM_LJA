@@ -156,11 +156,14 @@ app.post('/getInfo', function(req, res){
         });
 });
 
-app.get('/getClient', function(req, res){
+app.post('/getClient', function(req, res){
+
+  console.log(req.body.id);
+
   console.log("Get client request received!");
   results = [];
   pg.connect(connectionString, function(err, client, done){
-    var searchClient = ('SELECT * FROM clients WHERE id=' + global.clientId);
+    var searchClient = ('SELECT * FROM clients WHERE id=' + req.body.id);
     var query = client.query(searchClient);
     query.on('row', function(row){
       results.push(row);
