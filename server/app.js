@@ -314,18 +314,18 @@ app.post('/newCase', function(req, res){
   res.sendStatus(200);
 });
 
-app.post('/sendInsure', function(req, res){
-  console.log('hit received at sendInsure, with insure ID of', req.body.insureId);
-  global.insureId= req.body.insureId;
-  res.sendStatus(200);
-});
+// app.post('/sendInsure', function(req, res){
+//   console.log('hit received at sendInsure, with insure ID of', req.body.insureId);
+//   global.insureId= req.body.insureId;
+//   res.sendStatus(200);
+// });
 
 app.get('/getInsureId', function(req, res){
   console.log('request received at getInsureId');
   return res.json(global.insureId);
 });
 
-app.get('/specificInsure', function(req, res){
+app.post('/specificInsure', function(req, res){
   //  var searchCaseMeta = ('SELECT * FROM cases_meta WHERE id=' + global.caseId);
   console.log('request received at specific insure');
   resultsSpecInsure = [];
@@ -334,9 +334,9 @@ app.get('/specificInsure', function(req, res){
     //   console.log(err);
     // }
     // else
-      var specificInsuranceQuery = ('SELECT * FROM insurers WHERE id='+global.insureId);
+      var specificInsuranceQuery = ('SELECT * FROM insurers WHERE id='+ req.body.insureId);
       console.log('we are sending over the query');
-      console.log('SELECT * FROM insurers WHERE id='+global.insureId);
+      console.log('SELECT * FROM insurers WHERE id='+ req.body.insureId);
       var query = client.query(specificInsuranceQuery);
       query.on('row', function(row){
         resultsSpecInsure.push(row);
@@ -433,13 +433,13 @@ app.post('/caseStatusUpdate', function(req, res){
   res.sendStatus(200);
 });
 
-app.get('/getClosedCases', function(req, res){
+app.post('/getClosedCases', function(req, res){
   console.log('request received to get closed cases');
   resultsCase = [];
   pg.connect(connectionString, function(err, client, done){
-    var searchCases = ("SELECT * FROM cases_meta WHERE client_id=" + global.clientId +" AND status='closed'");
+    var searchCases = ("SELECT * FROM cases_meta WHERE client_id=" + req.body.id +" AND status='closed'");
     console.log("we are sending over the query");
-    console.log("SELECT * FROM cases_meta WHERE client_id=" + global.clientId +" AND status='closed'");
+    console.log("SELECT * FROM cases_meta WHERE client_id=" + req.body.id +" AND status='closed'");
     var query = client.query(searchCases);
     query.on('row', function(row){
       resultsCase.push(row);
@@ -459,13 +459,13 @@ app.get('/getClosedCases', function(req, res){
 });
 
 
-app.get('/getCanceledCases', function(req, res){
+app.post('/getCanceledCases', function(req, res){
   console.log('request received to get open cases');
   resultsCase = [];
   pg.connect(connectionString, function(err, client, done){
-    var searchCases = ("SELECT * FROM cases_meta WHERE client_id=" + global.clientId +" AND status='canceled'");
+    var searchCases = ("SELECT * FROM cases_meta WHERE client_id=" + req.body.id +" AND status='canceled'");
     console.log("we are sending over the query");
-    console.log("SELECT * FROM cases_meta WHERE client_id=" + global.clientId +" AND status='canceled'");
+    console.log("SELECT * FROM cases_meta WHERE client_id=" + req.body.id +" AND status='canceled'");
     var query = client.query(searchCases);
     query.on('row', function(row){
       resultsCase.push(row);
@@ -488,13 +488,13 @@ app.get('/getCanceledCases', function(req, res){
 
 
 
-app.get('/getOpenCases', function(req, res){
+app.post('/getOpenCases', function(req, res){
   console.log('request received to get open cases');
   resultsCase = [];
   pg.connect(connectionString, function(err, client, done){
-    var searchCases = ("SELECT * FROM cases_meta WHERE client_id=" + global.clientId +" AND status='open'");
+    var searchCases = ("SELECT * FROM cases_meta WHERE client_id=" + req.body.id +" AND status='open'");
     console.log("we are sending over the query");
-    console.log("SELECT * FROM cases_meta WHERE client_id=" + global.clientId +" AND status='open'");
+    console.log("SELECT * FROM cases_meta WHERE client_id=" + req.body.id +" AND status='open'");
     var query = client.query(searchCases);
     query.on('row', function(row){
       resultsCase.push(row);

@@ -13,6 +13,7 @@ CRMLJA.filter('capitalize', function() {
 });
 
 CRMLJA.controller('contentArea', ['$scope', '$http', '$window', function($scope, $http, $window){
+  $scope.clientId = "";
 
       $scope.editClientInfo = function(){
         $window.location.href = '/editClientInfo';
@@ -62,14 +63,14 @@ $scope.updateClient = function(){
 };
 
 $scope.getClients = function(){
-  $scope.client = sessionStorage.getItem("clientId");
-  console.log('scope . client is ', $scope.client);
-  if ($scope.client == undefined) {
+  $scope.clientId = sessionStorage.getItem("clientId");
+  console.log('scope . client is ', $scope.clientId);
+  if ($scope.clientId == undefined) {
     console.log('woof!');
     $window.location.href= '/search';
   }
         var sendMe = {
-          id: $scope.client
+          id: $scope.clientId
         };
         console.log('send me is ', sendMe);
     $scope.statusOfTheCase = 'open';
@@ -109,44 +110,53 @@ $scope.getClients = function(){
 
 $scope.insurerEdit = function(indexParam){
   console.log("Insureredit click received with param of ", indexParam);
-insurerEdit = {
-  insureId: indexParam
-};
+  sessionStorage.setItem("insureId", indexParam);
+  $window.location.href= '/insureEdit';
 
-  $http({
-    method: 'POST',
-    url: '/sendInsure',
-    data: insurerEdit
-  }).then(function(){
-    $window.location.href= '/insureEdit';
-  });
+
+  // $http({
+  //   method: 'POST',
+  //   url: '/sendInsure',
+  //   data: insurerEdit
+  // }).then(function(){
+  //   $window.location.href= '/insureEdit';
+  // });
 };
 
 
 $scope.getClients();
 
 $scope.updateCaseDisplay = function(){
+  var sendMe = {
+    id: $scope.clientId
+  };
+
+  console.log(sendMe);
+
   console.log($scope.statusOfTheCase);
   if(($scope.statusOfTheCase)=='closed'){
     $http({
-      method: 'GET',
+      method: 'POST',
       url: '/getClosedCases',
+      data: sendMe
     }).then(function(response){
   console.log(response.data);
   $scope.cases = response.data;
 });
   } else if (($scope.statusOfTheCase)== 'open'){
     $http({
-      method: 'GET',
-      url: '/getOpenCases'
+      method: 'POST',
+      url: '/getOpenCases',
+      data: sendMe
     }).then(function(response){
       console.log(response.data);
       $scope.cases = response.data;
     });
   } else {
     $http({
-      method: 'GET',
-      url: '/getCanceledCases'
+      method: 'POST',
+      url: '/getCanceledCases',
+      data: sendMe
     }).then(function(response){
       console.log(response.data);
       $scope.cases = response.data;
@@ -524,10 +534,16 @@ $scope.specificInsure= '';
 
 
 $scope.receiveInsurerInfo = function(){
+  $scope.insureId = sessionStorage.getItem("insureId");
+var insureId = {
+  insureId: $scope.insureId
+};
+
   console.log('received request at specificInsure');
   $http({
-    method: 'GET',
+    method: 'POST',
     url: '/specificInsure',
+    data: insureId
   }).then(function(response){
     console.log(response);
     $scope.specificInsure = response.data;
