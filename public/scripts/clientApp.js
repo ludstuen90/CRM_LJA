@@ -243,6 +243,8 @@ $scope.myCases();
 $scope.caseClick = function(index){
   console.log("received request at caseClick of: ");
   console.log(index);
+  sessionStorage.setItem("caseId", $scope.cases[index].id);
+
 
   var caseSend = {
     case_id: $scope.cases[index].id
@@ -529,16 +531,14 @@ $scope.username = '';
 CRMLJA.controller('insureEdit', ['$scope', '$http', '$window', function($scope, $http, $window){
 $scope.thisInsurer = 0;
 $scope.specificInsure= '';
-
-
-
-
-$scope.receiveInsurerInfo = function(){
-  $scope.insureId = sessionStorage.getItem("insureId");
+$scope.insureId = sessionStorage.getItem("insureId");
 var insureId = {
   insureId: $scope.insureId
 };
 
+
+
+$scope.receiveInsurerInfo = function(){
   console.log('received request at specificInsure');
   $http({
     method: 'POST',
@@ -579,8 +579,9 @@ $scope.saveInsure= function(){
   console.log($scope.specificInsure[0].first_name);
 
   $http({
-    method: 'GET',
-    url: '/removeInsurer'
+    method: 'POST',
+    url: '/removeInsurer',
+    data: insureId
   }).then(function(){
     $http({
       method: 'POST',
@@ -611,8 +612,9 @@ $scope.deleteInsure = function() {
     if ('yes' === prompt("If you still want to delete, type 'yes' into the box below. Hint: No quotes needed.")){
       alert("Provider has been deleted.");
       $http({
-        method:'GET',
-        url: '/removeInsurer'
+        method:'POST',
+        url: '/removeInsurer',
+        data: $scope.specificInsure[0]
       }).then(function(){
         $window.location.href = '/360';
       });
@@ -695,10 +697,15 @@ CRMLJA.controller('LoginController', ['$scope', '$http', '$window', '$location',
 
 
 CRMLJA.controller('clientEdit', ['$scope', '$http', '$window', function($scope, $http, $window){
+var clientSend = {
+  id: sessionStorage.getItem("clientId")
+};
+
 $scope.initCaseEdit = function(){
        $http({
-          method: 'GET',
+          method: 'POST',
           url: '/getClient',
+          data: clientSend
         }).then(function(response){
           console.log("client response is...");
           console.log(response);
