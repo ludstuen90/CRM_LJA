@@ -93,11 +93,11 @@ app.get('/logout', function(req, res){
   res.redirect('/');
 });
 
-app.get('/getInsurer', function(req, res){
+app.post('/getInsurer', function(req, res){
   console.log("Get insurer request received!");
   resultsIns= [];
   pg.connect(connectionString, function(err, client, done){
-    var search = ('SELECT * FROM insurers WHERE client_id=' + global.clientId);
+    var search = ('SELECT * FROM insurers WHERE client_id=' + req.body.id);
     var query1 = client.query(search);
     query1.on('row', function(row){
       resultsIns.push(row);
@@ -114,12 +114,12 @@ app.get('/getInsurer', function(req, res){
 
 });
 
-app.post('/sendClient', function(req, res){
-  console.log(req.body.id);
-  console.log('current client is now', req.body.id);
-  global.clientId= req.body.id;
-  res.sendStatus(200);
-});
+// app.post('/sendClient', function(req, res){
+//   console.log(req.body.id);
+//   console.log('current client is now', req.body.id);
+//   global.clientId= req.body.id;
+//   res.sendStatus(200);
+// });
 
 // app.get('/360View', function(req, res){
 //   res.sendFile(path.resolve('views/index.html'));
@@ -179,13 +179,13 @@ app.post('/getClient', function(req, res){
 
 });
 
-app.get('/getCases', function(req, res){
+app.post('/getCases', function(req, res){
   console.log("Get case request received!");
   resultsCase = [];
   pg.connect(connectionString, function(err, client, done){
-    var searchCases = ("SELECT * FROM cases_meta WHERE client_id=" + global.clientId +" AND status='open'");
+    var searchCases = ("SELECT * FROM cases_meta WHERE client_id=" + req.body.id +" AND status='open'");
     console.log("we are sending over the query");
-    console.log("SELECT * FROM cases_meta WHERE client_id=" + global.clientId +" AND status='open'");
+    console.log("SELECT * FROM cases_meta WHERE client_id=" + req.body.id +" AND status='open'");
     var query = client.query(searchCases);
     query.on('row', function(row){
       resultsCase.push(row);

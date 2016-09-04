@@ -68,8 +68,6 @@ $scope.getClients = function(){
     console.log('woof!');
     $window.location.href= '/search';
   }
-
-
         var sendMe = {
           id: $scope.client
         };
@@ -77,8 +75,9 @@ $scope.getClients = function(){
     $scope.statusOfTheCase = 'open';
         console.log("get clients was called!");
         $http({
-          method: 'GET',
+          method: 'POST',
           url: '/getInsurer',
+          data: sendMe
         }).then(function(responseIns){
           console.log("response insurer is is...");
           console.log(responseIns.data);
@@ -97,8 +96,9 @@ $scope.getClients = function(){
                 });
 
         $http({
-          method: 'GET',
+          method: 'POST',
           url: '/getCases',
+          data: sendMe
         }).then(function(responseCas){
           console.log('cases response is');
           $scope.cases=responseCas.data;
