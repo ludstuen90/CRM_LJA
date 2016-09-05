@@ -356,7 +356,8 @@ var caseSend = {
           console.log('hit on case status received');
           $scope.caseMeta.status = $scope.statusOfTheCase;
           var caseStatusSend = {
-            status: $scope.caseMeta.status
+            status: $scope.caseMeta.status,
+            id: $scope.caseId
           };
 
           $http({

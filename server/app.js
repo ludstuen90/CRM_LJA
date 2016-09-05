@@ -424,10 +424,10 @@ app.post('/addInsurer', function(req, res){
 
 app.post('/caseStatusUpdate', function(req, res){
   console.log("request received to update status of case");
-  console.log("UPDATE cases_meta SET status='" + req.body.status + "' WHERE id='"+ global.caseId+"'");
+  console.log("UPDATE cases_meta SET status='" + req.body.status + "' WHERE id='"+ req.body.id +"'");
 
   pg.connect(connectionString, function(err, client, done){
-    client.query("UPDATE cases_meta SET status='" + req.body.status + "' WHERE id='"+ global.caseId+"'");
+    client.query("UPDATE cases_meta SET status='" + req.body.status + "' WHERE id='"+ req.body.id +"'");
     done();
   });
   res.sendStatus(200);
