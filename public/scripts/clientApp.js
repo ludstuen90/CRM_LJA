@@ -26,23 +26,27 @@ CRMLJA.controller('contentArea', ['$scope', '$http', '$window', function($scope,
     $scope.caseClick = function(index){
       console.log("received request at caseClick of: ");
       console.log(index);
+      sessionStorage.setItem("caseId", index);
 
-      var caseSend = {
-        case_id: index
-      };
+      // var caseSend = {
+      //   case_id: index
+      // };
 
-        $http({
-          method: 'POST',
-          url: '/caseParams',
-          data: caseSend
-        }).then(function(){
-          console.log('Now we will go to the case');
-          $scope.toCase();
-
-        });
+        // $http({
+        //   method: 'POST',
+        //   url: '/caseParams',
+        //   data: caseSend
+        // }).then(function(){
+        //   console.log('Now we will go to the case');
+        //   $scope.toCase();
+        //
+        // });
       $scope.toCase = function(){
         $window.location.href = '/case';
       };
+
+      $scope.toCase();
+
 };
 
 $scope.updateClient = function(){
@@ -282,10 +286,22 @@ $scope.caseClick = function(index){
 
 
 CRMLJA.controller('cases', ['$scope', '$http', '$window', function($scope, $http, $window){
+$scope.clientId = sessionStorage.getItem("clientId");
+$scope.caseId = sessionStorage.getItem("caseId");
+
+var clientSend = {
+  id: $scope.clientId
+};
+
+var caseSend = {
+  id: $scope.caseId
+};
+
         $scope.getCases = function(){
           $http({
-            method: 'GET',
+            method: 'POST',
             url: '/getClient',
+            data: clientSend
           }).then(function(response){
             $scope.client = response.data[0];
       console.log("Client info is...");
@@ -294,8 +310,9 @@ CRMLJA.controller('cases', ['$scope', '$http', '$window', function($scope, $http
 
 
           $http({
-            method: 'GET',
+            method: 'POST',
             url: '/caseMet',
+            data: caseSend
           }).then(function(response){
             console.log("Now, for case meta information we are receiving...");
             $scope.caseMeta = response.data[0];
@@ -304,8 +321,9 @@ CRMLJA.controller('cases', ['$scope', '$http', '$window', function($scope, $http
           });
 
           $http({
-            method: 'GET',
+            method: 'POST',
             url: '/caseDet',
+            data: caseSend
           }).then(function(response){
             console.log("Now, for case note content we are receiving...");
             $scope.casenotes = response.data;

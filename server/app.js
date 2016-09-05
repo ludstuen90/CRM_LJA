@@ -237,13 +237,13 @@ app.get('/getMyCases', function(req, res){
   });
 });
 
-app.get('/caseDet', function(req, res){
+app.post('/caseDet', function(req, res){
   console.log("Get case request received!");
   resultsCaseNot = [];
   pg.connect(connectionString, function(err, client, done){
-    var searchCaseNotes = ('SELECT * FROM cases_notes WHERE case_id=' + global.caseId);
+    var searchCaseNotes = ('SELECT * FROM cases_notes WHERE case_id=' + req.body.id);
     console.log("we are sending over the query");
-    console.log('SELECT * FROM cases_notes WHERE case_id=' + global.caseId);
+    console.log('SELECT * FROM cases_notes WHERE case_id=' + req.body.id);
     var query = client.query(searchCaseNotes);
     query.on('row', function(row){
       resultsCaseNot.push(row);
@@ -262,13 +262,13 @@ app.get('/caseDet', function(req, res){
   });
 });
 
-app.get('/caseMet', function(req, res){
+app.post('/caseMet', function(req, res){
   console.log("Get case request received!");
   resultsCaseMet = [];
   pg.connect(connectionString, function(err, client, done){
-    var searchCaseMeta = ('SELECT * FROM cases_meta WHERE id=' + global.caseId);
+    var searchCaseMeta = ('SELECT * FROM cases_meta WHERE id=' + req.body.id);
     console.log("we are sending over the query");
-    console.log('SELECT * FROM cases_meta WHERE id=' + global.caseId);
+    console.log('SELECT * FROM cases_meta WHERE id=' + req.body.id);
     var query = client.query(searchCaseMeta);
     query.on('row', function(row){
       resultsCaseMet.push(row);
