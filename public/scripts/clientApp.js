@@ -381,6 +381,16 @@ CRMLJA.controller('caseNotes', ['$scope', '$http', '$window', '$filter', functio
 $scope.casenotes=[];
 $scope.noteId = 0;
 
+$scope.clientId = sessionStorage.getItem("clientId");
+$scope.caseId = sessionStorage.getItem("caseId");
+
+var clientSend = {
+  id: $scope.clientId
+};
+
+var caseSend = {
+  id: $scope.caseId
+};
 
       $scope.seeNote= function(noteId){
         console.log("received a note click request of ", noteId);
@@ -425,24 +435,27 @@ $scope.noteId = 0;
       $scope.noteInit= function(){
 
         $http({
-          method: 'GET',
+          method: 'POST',
           url: '/getClient',
+          data: clientSend
         }).then(function(response){
           $scope.client = response.data[0];
       console.log("Client info is...");
           console.log($scope.client);
         });
         $http({
-          method: 'GET',
+          method: 'POST',
           url: '/caseMet',
+          data: caseSend
         }).then(function(response){
           console.log("Now, for case meta information we are receiving...");
           $scope.caseMeta = response.data[0];
           console.log($scope.caseMeta);
         });
         $http({
-          method: 'GET',
+          method: 'POST',
           url: '/caseDet',
+          data: caseSend
         }).then(function(response){
           console.log("Now, for case note content we are receiving...");
           $scope.casenotes = response.data;

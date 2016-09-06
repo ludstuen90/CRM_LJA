@@ -287,9 +287,9 @@ app.post('/caseMet', function(req, res){
   });
 });
 
-app.get('/noteSee', function(req, res){
-  return res.json(global.noteId);
-});
+// app.get('/noteSee', function(req, res){
+//   return res.json(global.noteId);
+// });
 
 app.post('/noteView', function(req, res){
   console.log("Received a note view request of", req.body.view);
