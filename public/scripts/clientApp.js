@@ -431,7 +431,6 @@ var caseSend = {
         }
       };
 
-
       $scope.noteInit= function(){
 
         $http({
@@ -959,12 +958,6 @@ angular.module('CRMLJA').controller('TypeaheadCtrl',  function($scope, $http, $w
         $window.location.href = '/case';
 
       });
-
-
-
-
-
-
 
   console.log($scope.selected);
 };
