@@ -398,31 +398,35 @@ var caseSend = {
           view: noteId
         };
 
-          $scope.toNotes = function(){
-              console.log('Request received to go to notes');
-            };
-              $http({
-                method: 'POST',
-                url: '/noteView',
-                data: noteView
-              }).then(function(){
-                $http({
-                  method: 'GET',
-                  url: '/noteSee',
-                }).then(function(response){
-                  $scope.noteId = response.data;
-                  console.log('after request, we declare noteId' , $scope.noteId);
-                  $scope.findNote();
-                });
-              });
+        sessionStorage.setItem("noteId", noteId);
+        $scope.findNote();
 
-              $scope.toNotes();
+          // $scope.toNotes = function(){
+          //     console.log('Request received to go to notes');
+          //   };
+          //     $http({
+          //       method: 'POST',
+          //       url: '/noteView',
+          //       data: noteView
+          //     }).then(function(){
+          //       $http({
+          //         method: 'GET',
+          //         url: '/noteSee',
+          //       }).then(function(response){
+          //         $scope.noteId = response.data;
+          //         console.log('after request, we declare noteId' , $scope.noteId);
+          //         $scope.findNote();
+          //       });
+          //     });
+
+              // $scope.toNotes();
       };
 
       $scope.findNote = function() {
+        $scope.noteId = sessionStorage.getItem("noteId");
         for (var i=0; i < $scope.casenotes.length; i++){
           console.log('at position ', i, 'the scope is', $scope.casenotes[i].id, 'and the noteId is ', $scope.noteId);
-          if ($scope.casenotes[i].id === $scope.noteId) {
+          if ($scope.casenotes[i].id == $scope.noteId) {
             console.log('long form', $scope.casenotes[i].note);
             $scope.currentNote = $scope.casenotes[i].note;
             $scope.currentTitle = $scope.casenotes[i].title;
@@ -457,17 +461,19 @@ var caseSend = {
           data: caseSend
         }).then(function(response){
           console.log("Now, for case note content we are receiving...");
+
+
           $scope.casenotes = response.data;
           console.log('casenotes is now!', $scope.casenotes);
-          $http({
-            method: 'GET',
-            url: '/noteSee',
-          }).then(function(response){
-            $scope.noteId = response.data;
-            console.log('after request, we declare noteId' , $scope.noteId);
+          // $http({
+          //   method: 'GET',
+          //   url: '/noteSee',
+          // }).then(function(response){
+          //   $scope.noteId = response.data;
+            // console.log('after request, we declare noteId' , $scope.noteId);
             $scope.findNote();
           });
-            });
+            // });
 
 
       };
@@ -480,29 +486,36 @@ var caseSend = {
 
 CRMLJA.controller('caseCreate', ['$scope', '$http', '$window', function($scope, $http, $window){
 
+  $scope.clientId = sessionStorage.getItem("clientId");
+  $scope.caseId = sessionStorage.getItem("caseId");
+
+
           $http({
             method: 'GET',
             url: '/hello',
           }).then(function(response){
             $scope.username = response.data;
           });
-
-        $http({
-        method: 'GET',
-        url: '/getClient',
-      }).then(function(response){
-        $scope.client = response.data[0];
-        console.log("Client info is...");
-        console.log($scope.client);
-      });
-
-
-
 }]);
 
 
 CRMLJA.controller('addNote', ['$scope', '$http', '$window', function($scope, $http, $window){
 $scope.username = '';
+
+$scope.clientId = sessionStorage.getItem("clientId");
+$scope.caseId = sessionStorage.getItem("caseId");
+
+console.log('client id is ', $scope.clientId);
+console.log('case id is ', $scope.caseId);
+
+
+var clientSend = {
+  id: $scope.clientId
+};
+
+var caseSend = {
+  id: $scope.caseId
+};
 
 
       $scope.initial = function(){
@@ -513,14 +526,14 @@ $scope.username = '';
           $scope.username = response.data;
         });
 
-        $http({
-          method: 'GET',
-          url: '/getClient',
-        }).then(function(response){
-          $scope.client = response.data[0];
-        console.log("Client info is...");
-          console.log($scope.client);
-        });
+        // $http({
+        //   method: 'GET',
+        //   url: '/getClient',
+        // }).then(function(response){
+        //   $scope.client = response.data[0];
+        // console.log("Client info is...");
+        //   console.log($scope.client);
+      //   });
       };
 
       $scope.initial();
@@ -528,8 +541,9 @@ $scope.username = '';
 
 
       $http({
-        method: 'GET',
+        method: 'POST',
         url: '/caseMet',
+        data: caseSend
       }).then(function(response){
         console.log("Now, for case meta information we are receiving...");
         $scope.caseMeta = response.data[0];
@@ -540,7 +554,8 @@ $scope.username = '';
         var newNote = {
           noteTitle: $scope.createNoteTitle,
           noteContents: $scope.addedNote,
-          noteAuthor: $scope.username
+          noteAuthor: $scope.username,
+          case_id: $scope.caseId
         };
         console.log('the note we are about to submit is ', newNote);
 

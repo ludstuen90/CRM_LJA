@@ -291,12 +291,12 @@ app.post('/caseMet', function(req, res){
 //   return res.json(global.noteId);
 // });
 
-app.post('/noteView', function(req, res){
-  console.log("Received a note view request of", req.body.view);
-  global.noteId= req.body.view;
-  console.log('note global variable is now ', global.noteId);
-  res.sendStatus(200);
-});
+// app.post('/noteView', function(req, res){
+//   console.log("Received a note view request of", req.body.view);
+//   global.noteId= req.body.view;
+//   console.log('note global variable is now ', global.noteId);
+//   res.sendStatus(200);
+// });
 
 app.post('/newCase', function(req, res){
   console.log('received a case create request');
@@ -389,8 +389,8 @@ app.post('/caseParams', function(req, res){
 app.post('/newCaseNote', function(req, res){
   // console.log('note title is ', req.body.noteTitle , 'and the author is ', req.body.noteAuthor, ', and the body is ', req.body.noteContents);
   pg.connect(connectionString, function(err, client, done){
-    console.log('the query we will do contians ', global.caseId, req.body.noteTitle, req.body.noteContents, req.body.noteAuthor );
-    client.query('INSERT INTO cases_notes (case_id, title, note, author) VALUES ($1, $2, $3, $4)', [global.caseId, req.body.noteTitle, req.body.noteContents, req.body.noteAuthor ]);
+    console.log('the query we will do contians ', req.body.case_id, req.body.noteTitle, req.body.noteContents, req.body.noteAuthor );
+    client.query('INSERT INTO cases_notes (case_id, title, note, author) VALUES ($1, $2, $3, $4)', [req.body.case_id, req.body.noteTitle, req.body.noteContents, req.body.noteAuthor ]);
   done();
   pg.end();
   });
