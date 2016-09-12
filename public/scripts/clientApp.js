@@ -489,12 +489,23 @@ CRMLJA.controller('caseCreate', ['$scope', '$http', '$window', function($scope, 
   $scope.clientId = sessionStorage.getItem("clientId");
   $scope.caseId = sessionStorage.getItem("caseId");
 
-
+  var clientSend = {
+    id: $scope.clientId
+  };
           $http({
-            method: 'GET',
-            url: '/hello',
+            method: 'POST',
+            url: '/getClient',
+            data: clientSend
           }).then(function(response){
-            $scope.username = response.data;
+            $scope.client = response.data[0];
+            console.log('client info is...', $scope.client);
+
+            $http({
+              method: 'GET',
+              url: '/hello',
+            }).then(function(response){
+              $scope.username = response.data;
+            });
           });
 }]);
 
@@ -882,7 +893,8 @@ angular.module('CRMLJA').controller('TypeaheadCtrl',  function($scope, $http, $w
       createdby: $scope.username,
       assigned: $scope.selected,
       claimNo: $scope.claimNo,
-      resumen: $scope.resumen
+      resumen: $scope.resumen,
+      id: $scope.clientId
     };
     console.log(caseCreate);
 
@@ -895,7 +907,8 @@ angular.module('CRMLJA').controller('TypeaheadCtrl',  function($scope, $http, $w
       $http({
         method:'GET',
         url: '/getLastVal',
-      }).then(function(){
+      }).then(function(response){
+          sessionStorage.setItem("caseId", response.data[0].id);
         $window.location.href = '/case';
       });
 
