@@ -961,6 +961,4 @@ angular.module('CRMLJA').controller('TypeaheadCtrl',  function($scope, $http, $w
 
   console.log($scope.selected);
 };
-
-
 });
