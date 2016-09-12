@@ -632,13 +632,18 @@ $scope.getInsureId = function(){
   };
 
 $scope.saveInsure= function(){
-  console.log($scope.specificInsure );
+  console.log($scope.specificInsure);
   console.log($scope.specificInsure[0].first_name);
+
+  var sendSave = {
+    id: $scope.specificInsure[0].id
+  }
+
 
   $http({
     method: 'POST',
     url: '/removeInsurer',
-    data: insureId
+    data: sendSave
   }).then(function(){
     $http({
       method: 'POST',
@@ -653,6 +658,9 @@ $scope.saveInsure= function(){
 
 
 $scope.addInsurance = function(){
+$scope.clientId = sessionStorage.getItem("clientId");
+$scope.specificInsure[0].client_id = $scope.clientId;
+
   $http({
     method: 'POST',
     url: '/addInsurer',
