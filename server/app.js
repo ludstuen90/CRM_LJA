@@ -513,9 +513,9 @@ app.post('/getOpenCases', function(req, res){
 });
 
 app.post('/caseReassignData', function(req, res){
-  console.log(req.body.username);
+  console.log(req.body.username, req.body.id);
   pg.connect(connectionString, function(err, client, done){
-    client.query("UPDATE cases_meta SET assigned_to='" + req.body.username + "'  WHERE id=" + global.caseId);
+    client.query("UPDATE cases_meta SET assigned_to='" + req.body.username + "'  WHERE id=" + req.body.id);
     done();
     pg.end();
 });
