@@ -6,28 +6,7 @@ var app=express();
 app.use( bodyParser.json() );
 app.use(bodyParser.urlencoded({extended:false}));
 
-
-global.userName = '';
-global.clientId=0;
-global.caseId=0;
-global.noteId=0;
-global.insureId=0;
-
-//include Database
-//Include information for Heroku Database
-//Will include SQL Strategy
-
 var pg = require('pg');
-// pg.connect(process.env.DATABASE_URL, function(err, client) {
-//   if (err) throw err;
-//   console.log('Connected to postgres! Getting schemas...');
-//
-//   client
-//     .query('SELECT table_schema,table_name FROM information_schema.tables;')
-//     .on('row', function(row) {
-//       console.log(JSON.stringify(row));
-//     });
-// });
 
 if(process.env.DATABASE_URL !== undefined) {
      console.log('env connection string');
@@ -38,9 +17,6 @@ if(process.env.DATABASE_URL !== undefined) {
     connectionString = 'postgres://localhost:5432/LJACRM';
 }
 ///below added as per Heroku instructions
-
-
-
 
 //Spin up local server
 app.listen(process.env.PORT || 3000, function(req, res){
@@ -113,17 +89,6 @@ app.post('/getInsurer', function(req, res){
   });
 
 });
-
-// app.post('/sendClient', function(req, res){
-//   console.log(req.body.id);
-//   console.log('current client is now', req.body.id);
-//   global.clientId= req.body.id;
-//   res.sendStatus(200);
-// });
-
-// app.get('/360View', function(req, res){
-//   res.sendFile(path.resolve('views/index.html'));
-// });
 
 app.post('/getInfo', function(req, res){
   console.log("Get client request received!");
@@ -287,17 +252,6 @@ app.post('/caseMet', function(req, res){
   });
 });
 
-// app.get('/noteSee', function(req, res){
-//   return res.json(global.noteId);
-// });
-
-// app.post('/noteView', function(req, res){
-//   console.log("Received a note view request of", req.body.view);
-//   global.noteId= req.body.view;
-//   console.log('note global variable is now ', global.noteId);
-//   res.sendStatus(200);
-// });
-
 app.post('/newCase', function(req, res){
   console.log('received a case create request');
   console.log('author is ', req.body.author);
@@ -314,11 +268,6 @@ app.post('/newCase', function(req, res){
   res.sendStatus(200);
 });
 
-// app.post('/sendInsure', function(req, res){
-//   console.log('hit received at sendInsure, with insure ID of', req.body.insureId);
-//   global.insureId= req.body.insureId;
-//   res.sendStatus(200);
-// });
 
 app.get('/getInsureId', function(req, res){
   console.log('request received at getInsureId');
@@ -326,14 +275,11 @@ app.get('/getInsureId', function(req, res){
 });
 
 app.post('/specificInsure', function(req, res){
-  //  var searchCaseMeta = ('SELECT * FROM cases_meta WHERE id=' + global.caseId);
+
   console.log('request received at specific insure');
   resultsSpecInsure = [];
   pg.connect(connectionString, function(err, client, done){
-    // if(err){
-    //   console.log(err);
-    // }
-    // else
+
       var specificInsuranceQuery = ('SELECT * FROM insurers WHERE id='+ req.body.insureId);
       console.log('we are sending over the query');
       console.log('SELECT * FROM insurers WHERE id='+ req.body.insureId);
@@ -633,10 +579,6 @@ app.get('/getUsers', function(req, res){
 });
 
 
-
-
-
-
 //Assign Static Folder
 app.use( express.static('public'));
 
@@ -650,8 +592,6 @@ app.use('/*', index);
 
 function isAuthenticated(req, res, next) {
 
-    // do any checks you want to in here
-
     // CHECK THE USER STORED IN SESSION FOR A CUSTOM VARIABLE
     // you can do this however you want with whatever variables you set up
     if (req.user == null){
@@ -663,19 +603,3 @@ function isAuthenticated(req, res, next) {
     // IF A USER ISN'T LOGGED IN, THEN REDIRECT THEM SOMEWHERE
     res.redirect('/');
 }
-
-
-//
-// app.use(function(req, res, next) {
-//     if (req.session.username == null){
-// // if user is not logged-in redirect back to login page //
-//         res.redirect('/');
-//     }   else{
-//         next();
-//     }
-// });
-
-
-// app.use('/', express.static(__dirname+ '../views/index'));
-
-///
