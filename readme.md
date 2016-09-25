@@ -2,6 +2,7 @@ This project is designed to help a small law firm better connect with its client
 
 Problem: One attorney who operated a small law firm had difficulty in keeping up to date on the status of all cases within the office. 
 The law office has several employees who interact with clients. Cases progress, meaning courts have new information related to cases.
+
 Often clients would call, and it would be difficult to provide instantaneous up-to-the-minute informaiton.
 
 Solution: The system I built tracks all communicaiton between clients and the law firm. Additionally, users can create
