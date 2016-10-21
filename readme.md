@@ -13,6 +13,6 @@ You can try out a live version of this application by clicking the following lin
 
 https://afternoon-basin-54226.herokuapp.com/
 
-Username: LUDSTUEN (* username is case sensitive)
-Password: 'asdf'
-Available Client IDs: 1, 5, 6, 7, 8, and 9.
+<b>Username</b>: LUDSTUEN (* username is case sensitive *) <br>
+<b>Password</b>: 'asdf' <br>
+<b>Available Client IDs</b>: 1, 5, 6, 7, 8, and 9.
